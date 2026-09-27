@@ -1,1 +1,8 @@
+# Força o GitHub a reconhecer as linguagens corretamente
+*.py linguist-detectable=true
+*.html linguist-detectable=true
+*.css linguist-detectable=true
+*.js linguist-detectable=true
+
+# Opcional: se quiser que o HTML não conte como "código" e o Python domine
 # *.html linguist-documentation=true
