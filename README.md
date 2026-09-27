@@ -30,6 +30,11 @@
 
 <hr>
 
+> ⚠️ **Este é o repositório oficial do Pyrtugues.** 
+> Links antigos, forks ou contas anteriores podem estar desatualizados.
+
+<hr>
+
 <h2>📚 O que é o Pyrtugues?</h2>
 
 **Pyrtugues** é um projeto educacional de **programação em português** criado para facilitar o primeiro contato com **lógica de programação e Python**.
@@ -557,6 +562,11 @@ A publicação do código no GitHub não deve ser interpretada como autorizaçã
 O Pyrtugues nasceu como um projeto pessoal voltado para programação e educação, com a ideia de tornar o primeiro contato com código mais acessível para falantes de português.
 
 O projeto começou quando seu criador tinha 12 anos e evoluiu para incluir uma aplicação Desktop, uma versão Web, suporte ao Pygame, suporte ao Linux, documentação, exemplos e uma identidade própria.
+
+<hr>
+
+## 🧒 Pyrtugues para crianças e escolas
+Diferente do Portugol (que é pseudocódigo acadêmico e complicado) e do Logo (limitado a desenhos), o Pyrtugues ensina lógica de Python usando comandos simples em português, sem inglês e sem blocos. Ideal para projetos escolares e para dar o primeiro passo rumo ao Python real.
 
 <hr>
 
