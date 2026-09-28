@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pyrtugues — Aprenda Programação em Português</title>
+<meta name="theme-color" content="#7c3aed">
+<meta name="description" content="Aprenda programação em português com tradução automática para Python.">
+<meta property="og:title" content="Pyrtugues - Programação em Português">
+<meta property="og:description" content="Aprenda lógica de programação de forma divertida e em português!">
+<link rel="manifest" href='data:application/json,{"name":"Pyrtugues","short_name":"Pyrtugues","start_url":".","display":"standalone","background_color":"#0a0a0a","theme_color":"#7c3aed","icons":[{"src":"https://api.dicebear.com/7.x/shapes/svg?seed=pyrtugues","sizes":"512x512","type":"image/svg+xml"}]}'>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        pyr: {
+          50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',
+          400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed',700:'#6d28d9',
+          800:'#5b21b6',900:'#4c1d95',950:'#2e1065'
+        },
+        grn: {
+          400:'#34d399',500:'#10b981',600:'#059669',700:'#047857'
+        },
+        ink: {
+          950:'#050505',900:'#0a0a0a',800:'#111111',700:'#1a1a1a',
+          600:'#242424',500:'#2e2e2e',400:'#3d3d3d'
+        }
+      }
+    }
+  }
+}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+.btn-3d{position:relative;border-bottom-width:3px;transition:all .1s ease;font-weight:800;letter-spacing:.02em}
+.btn-3d:active:not(:disabled){transform:translateY(2px);border-bottom-width:1px}
+.btn-3d:disabled{opacity:.5;cursor:not-allowed}
+.CodeMirror{height:auto!important;min-height:200px;font-family:'JetBrains Mono','Fira Code',monospace!important;font-size:14px;border-radius:.75rem;background:#0a0a0a!important}
+.CodeMirror-scroll{max-height:420px}
+.CodeMirror-gutters{background:#050505!important;border-right:1px solid #1a1a1a!important}
+.CodeMirror-linenumber{color:#404040!important}
+.CodeMirror-cursor{border-left:2px solid #a78bfa!important}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:5px;border:2px solid #0a0a0a}
+::-webkit-scrollbar-thumb:hover{background:#7c3aed}
+@keyframes pop-in{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes slide-up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.3)}50%{box-shadow:0 0 40px rgba(124,58,237,.6)}}
+@keyframes bounce-soft{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.animate-pop{animation:pop-in .3s cubic-bezier(.16,1,.3,1)}
+.animate-slide-up{animation:slide-up .4s cubic-bezier(.16,1,.3,1)}
+.animate-glow{animation:glow 2s ease-in-out infinite}
+::selection{background:#7c3aed;color:#fff}
+</style>
+</head>
+<body class="bg-ink-900 text-slate-100 min-h-screen font-sans antialiased">
+
+<header id="mainHeader" class="bg-ink-800/95 backdrop-blur-lg border-b border-pyr-900/40 sticky top-0 z-30 px-3 sm:px-4 py-2.5 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <button onclick="toggleSidebar()" class="p-2 rounded-xl hover:bg-ink-700 text-pyr-400 transition-colors" title="Menu"><i class="fa-solid fa-bars text-lg"></i></button>
+    <div onclick="mudarSecao('home')" class="flex items-center gap-2 cursor-pointer select-none">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-pyr-500 to-pyr-700 flex items-center justify-center shadow-lg shadow-pyr-500/30">
+        <i class="fa-solid fa-code text-white"></i>
+      </div>
+      <div class="hidden sm:block">
+        <span class="font-black text-lg tracking-tight bg-gradient-to-r from-pyr-300 to-pyr-500 bg-clip-text text-transparent">Pyrtugues</span>
+        <span class="text-[10px] bg-pyr-500/20 text-pyr-300 px-1.5 py-0.5 rounded-md border border-pyr-500/30 font-bold ml-1">v3.1</span>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center gap-1.5 sm:gap-2">
+    <div id="streakBadge" class="flex items-center gap-1.5 bg-ink-700 border-2 border-orange-500/40 px-2.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black text-orange-400">
+      <i class="fa-solid fa-fire text-orange-500"></i><span id="streakCount">1</span>
+    </div>
+    <div class="flex items-center gap-1.5 bg-ink-700 border-2 border-yellow-500/40 px-2.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black text-yellow-400">
+      <i class="fa-solid fa-bolt"></i><span id="userXP">0</span>
+    </div>
+    <button onclick="toggleSom()" id="btnSound" class="p-2 rounded-xl hover:bg-ink-700 text-pyr-400 transition-colors" title="Som"><i class="fa-solid fa-volume-high"></i></button>
+    <button onclick="toggleModoFoco()" class="p-2 rounded-xl hover:bg-ink-700 text-pyr-400 transition-colors hidden sm:block" title="Modo Foco"><i class="fa-solid fa-expand"></i></button>
+    <div class="relative">
+      <button onclick="toggleMenuConfig(event)" class="p-2 rounded-xl hover:bg-ink-700 text-pyr-400 transition-colors" title="Config"><i class="fa-solid fa-gear"></i></button>
+      <div id="menuConfig" class="absolute right-0 mt-2 w-56 bg-ink-700 border-2 border-pyr-900/50 rounded-2xl shadow-2xl py-2 hidden z-50">
+        <div class="px-4 py-2 text-[10px] uppercase font-black text-pyr-400 tracking-wider">Fonte</div>
+        <button onclick="mudarFonte('sm')" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-slate-200">Pequena</button>
+        <button onclick="mudarFonte('md')" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-slate-200">Média</button>
+        <button onclick="mudarFonte('lg')" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-slate-200">Grande</button>
+        <div class="border-t border-pyr-900/50 my-1"></div>
+        <button onclick="exportarProgresso()" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-pyr-300"><i class="fa-solid fa-download mr-2"></i>Exportar</button>
+        <button onclick="document.getElementById('importInput').click()" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-pyr-300"><i class="fa-solid fa-upload mr-2"></i>Importar</button>
+        <button onclick="resetarProgresso()" class="w-full text-left px-4 py-2 text-sm hover:bg-ink-600 text-red-400"><i class="fa-solid fa-trash mr-2"></i>Resetar</button>
+        <input type="file" id="importInput" accept=".json" class="hidden" onchange="importarProgresso(event)">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="flex min-h-[calc(100vh-57px)]">
+  <div id="sidebarOverlay" onclick="fecharSidebar()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+  <aside id="sidebar" class="fixed md:sticky top-0 md:top-[57px] left-0 z-50 md:z-10 w-72 h-screen md:h-[calc(100vh-57px)] bg-ink-800 border-r-2 border-pyr-900/40 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+    <div class="p-4 border-b-2 border-pyr-900/40">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-black text-pyr-300 uppercase tracking-wider">Progresso</span>
+        <span class="text-sm font-black text-pyr-400" id="progressPercent">0%</span>
+      </div>
+      <div class="w-full bg-ink-900 rounded-full h-4 p-0.5 border-2 border-pyr-900/50">
+        <div id="progressBar" class="bg-gradient-to-r from-pyr-500 to-pyr-400 h-full rounded-full w-0 transition-all duration-700 flex items-center justify-end pr-1">
+          <div class="w-2 h-2 bg-white rounded-full shadow-lg"></div>
+        </div>
+      </div>
+      <div class="flex justify-between text-[11px] text-pyr-400 font-bold mt-1.5">
+        <span id="completedCount">0 / 30</span>
+        <span id="pyodideStatusBadge" class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse"></span><span>Carregando</span></span>
+      </div>
+    </div>
+
+    <div class="p-3 border-b-2 border-pyr-900/40">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-pyr-500 text-sm"></i>
+        <input type="text" id="searchInput" oninput="filtrarLicoes()" placeholder="Buscar... (Ctrl+K)" class="w-full bg-ink-900 border-2 border-pyr-900/50 rounded-xl pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-pyr-500 text-slate-200 placeholder-pyr-500/60 font-medium transition-colors">
+      </div>
+    </div>
+
+    <div class="p-2 space-y-1 border-b-2 border-pyr-900/40">
+      <button onclick="mudarSecao('home')" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold hover:bg-ink-700 flex items-center gap-3 text-slate-300 transition-colors"><i class="fa-solid fa-house text-pyr-400 w-4"></i> Início</button>
+      <button onclick="mudarSecao('pratica')" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold hover:bg-ink-700 flex items-center gap-3 text-slate-300 transition-colors"><i class="fa-solid fa-terminal text-pyr-400 w-4"></i> Sandbox</button>
+      <button onclick="abrirDicionario()" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold hover:bg-ink-700 flex items-center gap-3 text-slate-300 transition-colors"><i class="fa-solid fa-book-bookmark text-pyr-400 w-4"></i> Dicionário</button>
+      <button onclick="mudarSecao('perfil')" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold hover:bg-ink-700 flex items-center gap-3 text-slate-300 transition-colors"><i class="fa-solid fa-user-graduate text-pyr-400 w-4"></i> Perfil</button>
+    </div>
+
+    <div class="p-3 m-2 bg-gradient-to-br from-pyr-900/40 to-ink-700 rounded-2xl border-2 border-pyr-700/40">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-black text-pyr-300 flex items-center gap-1.5"><i class="fa-solid fa-bullseye text-red-400"></i>Missão Diária</span>
+        <span class="text-[10px] text-yellow-400 font-black">+100 XP</span>
+      </div>
+      <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 mb-1.5">
+        <span>2 lições hoje</span><span id="m1Prog">0/2</span>
+      </div>
+      <div class="w-full bg-ink-900 rounded-full h-2.5 p-0.5">
+        <div id="m1Bar" class="bg-gradient-to-r from-pyr-500 to-pyr-300 h-full rounded-full w-0 transition-all duration-500"></div>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-2 space-y-1" id="lessonsList"></div>
+  </aside>
+
+  <main id="mainContainer" class="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 bg-ink-900">
+    <section id="sec-home" class="max-w-5xl mx-auto space-y-6 animate-slide-up">
+      <div class="relative bg-gradient-to-br from-pyr-800 via-ink-800 to-ink-900 rounded-3xl p-6 sm:p-10 overflow-hidden border-2 border-pyr-500/20 shadow-2xl">
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-pyr-500/15 rounded-full blur-3xl"></div>
+        <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-pyr-400/15 rounded-full blur-3xl"></div>
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <div class="inline-flex items-center gap-2 bg-pyr-500/15 backdrop-blur-md px-3 py-1 rounded-full text-xs font-black text-pyr-300 border-2 border-pyr-500/30">
+            <span class="w-2 h-2 rounded-full bg-pyr-400 animate-pulse"></span>
+            <span>APRENDA PROGRAMANDO EM PORTUGUÊS</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight">
+            Código em <span class="text-pyr-400">português</span> que vira <span class="text-pyr-300">Python</span> de verdade!
+          </h1>
+          <p class="text-pyr-100/70 text-base sm:text-lg font-medium">
+            Criado por <strong class="text-white">Vinicius Caracciolo (12 anos)</strong>. Aprenda lógica de programação enquanto se diverte!
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="continuarJornada()" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-6 py-3 rounded-2xl text-sm flex items-center gap-2"><i class="fa-solid fa-play"></i> CONTINUAR</button>
+            <button onclick="mudarSecao('pratica')" class="btn-3d bg-ink-700 hover:bg-ink-600 text-pyr-200 border-ink-500 px-6 py-3 rounded-2xl text-sm flex items-center gap-2"><i class="fa-solid fa-terminal"></i> SANDBOX</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="bg-ink-800 rounded-2xl p-4 border-2 border-pyr-900/40">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-pyr-500/20 flex items-center justify-center"><i class="fa-solid fa-book-open text-pyr-400"></i></div>
+            <div>
+              <div class="text-[10px] text-pyr-400 font-black uppercase">Lições</div>
+              <div class="text-lg font-black text-white" id="homeCompletedCount">0/30</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-ink-800 rounded-2xl p-4 border-2 border-yellow-500/30">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center"><i class="fa-solid fa-bolt text-yellow-400"></i></div>
+            <div>
+              <div class="text-[10px] text-yellow-400 font-black uppercase">XP Total</div>
+              <div class="text-lg font-black text-white" id="homeXpCount">0</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-ink-800 rounded-2xl p-4 border-2 border-pyr-500/30">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-pyr-500/20 flex items-center justify-center"><i class="fa-solid fa-trophy text-pyr-300"></i></div>
+            <div>
+              <div class="text-[10px] text-pyr-300 font-black uppercase">Badges</div>
+              <div class="text-lg font-black text-white" id="homeBadgeCount">0/6</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-ink-800 rounded-2xl p-4 border-2 border-grn-500/30">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-grn-500/20 flex items-center justify-center"><i class="fa-solid fa-certificate text-grn-400"></i></div>
+            <div>
+              <div class="text-[10px] text-grn-400 font-black uppercase">Certificado</div>
+              <div class="text-sm font-black text-white" id="homeCertStatus">Bloqueado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-ink-800 rounded-2xl p-5 border-2 border-pyr-900/40">
+        <h3 class="font-black text-pyr-200 flex items-center gap-2 mb-3"><i class="fa-solid fa-calendar-days text-pyr-400"></i> Frequência (últimos 30 dias)</h3>
+        <div id="heatmapGrid" class="grid grid-cols-10 sm:grid-cols-15 gap-1.5"></div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-black text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-pyr-400"></i> Módulos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="modulesGrid"></div>
+      </div>
+    </section>
+
+    <section id="sec-lesson" class="max-w-6xl mx-auto space-y-5 hidden animate-slide-up">
+      <div class="flex items-center justify-between border-b-2 border-pyr-900/40 pb-4">
+        <div>
+          <span id="lessonCategory" class="text-xs font-black text-pyr-400 uppercase tracking-widest">Módulo 1</span>
+          <h2 id="lessonTitle" class="text-2xl sm:text-3xl font-black text-white mt-1">Lição</h2>
+        </div>
+        <span id="saveStatusIndicator" class="text-xs text-pyr-300 font-bold flex items-center gap-1.5 bg-ink-800 px-3 py-1.5 rounded-full border-2 border-pyr-900/50">
+          <span class="w-2 h-2 rounded-full bg-pyr-400"></span> Salvo
+        </span>
+      </div>
+
+      <div id="lessonBody" class="bg-ink-800 rounded-2xl p-5 sm:p-6 border-2 border-pyr-900/40 text-slate-300 space-y-3 text-base leading-relaxed"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-ink-800 border-2 border-pyr-900/40 rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-ink-700 px-4 py-2.5 border-b-2 border-pyr-900/40 flex items-center justify-between">
+            <span class="text-xs font-black text-pyr-300 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-code text-pyr-400"></i> Pyrtugues</span>
+            <button onclick="restaurarCodigoLicao()" class="text-xs text-pyr-400 hover:text-pyr-200 font-bold"><i class="fa-solid fa-rotate-left mr-1"></i>RESETAR</button>
+          </div>
+          <div class="p-3 bg-ink-900"><textarea id="lessonCodeEditor"></textarea></div>
+          <div class="p-3 bg-ink-700/50 border-t-2 border-pyr-900/40 flex items-center justify-between">
+            <button id="btnRunLesson" onclick="executarCodigo('lesson')" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-play"></i> EXECUTAR</button>
+            <span class="text-[11px] text-pyr-400 font-bold hidden sm:block">Ctrl + Enter</span>
+          </div>
+        </div>
+
+        <div class="bg-ink-800 border-2 border-pyr-900/40 rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-ink-700 px-4 py-2.5 border-b-2 border-pyr-900/40 flex items-center justify-between">
+            <span class="text-xs font-black text-pyr-300 uppercase tracking-wider flex items-center gap-2"><i class="fa-brands fa-python text-blue-400"></i> Python + Saída</span>
+            <button onclick="limparOutput('lessonOutput')" class="text-xs text-pyr-400 hover:text-pyr-200 font-bold">LIMPAR</button>
+          </div>
+          <div class="p-3 bg-ink-950 border-b-2 border-pyr-900/40 font-mono text-[11px] text-blue-300 overflow-x-auto max-h-32" id="translatedPythonLesson"># Python traduzido aparece aqui...</div>
+          <div class="p-3 bg-black font-mono text-sm min-h-[160px] max-h-[260px] overflow-y-auto" id="lessonOutput"><span class="text-pyr-600 italic">// Saída do programa...</span></div>
+        </div>
+      </div>
+
+      <div id="quizContainer" class="bg-gradient-to-br from-pyr-900/30 to-ink-800 border-2 border-pyr-700/40 rounded-2xl p-5 space-y-4 hidden">
+        <h3 class="font-black text-lg text-pyr-200 flex items-center gap-2"><i class="fa-solid fa-circle-question text-pyr-400"></i> DESAFIO</h3>
+        <p id="quizQuestion" class="text-slate-200 font-bold text-base"></p>
+        <div id="quizOptions" class="space-y-2"></div>
+        <div id="quizFeedback" class="hidden p-4 rounded-xl text-sm font-black text-center"></div>
+      </div>
+
+      <div class="bg-ink-800 rounded-2xl p-4 border-2 border-pyr-900/40">
+        <label class="text-xs font-black text-pyr-300 uppercase flex items-center gap-2 mb-2"><i class="fa-solid fa-pen-to-square text-pyr-400"></i> Anotações</label>
+        <textarea id="lessonNotes" oninput="salvarAnotacoes()" placeholder="Escreva suas anotações aqui..." class="w-full bg-ink-900 border-2 border-pyr-900/50 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-pyr-500 h-24 resize-y transition-colors"></textarea>
+      </div>
+
+      <div class="flex items-center justify-between pt-4">
+        <button id="btnPrevLesson" onclick="navegarLicao(-1)" class="btn-3d bg-ink-700 hover:bg-ink-600 text-pyr-200 border-ink-500 px-4 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> ANTERIOR</button>
+        <button id="btnNextLesson" onclick="navegarLicao(1)" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-5 py-2.5 rounded-xl text-sm flex items-center gap-2">PRÓXIMA <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </section>
+
+    <section id="sec-pratica" class="max-w-6xl mx-auto space-y-5 hidden animate-slide-up">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black text-white flex items-center gap-2"><i class="fa-solid fa-terminal text-pyr-400"></i> Sandbox</h2>
+        <p class="text-pyr-300 text-sm font-medium">Escreva qualquer código livremente em português!</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="bg-ink-800 border-2 border-pyr-900/40 rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-ink-700 px-4 py-2.5 border-b-2 border-pyr-900/40 flex items-center justify-between">
+            <span class="text-xs font-black text-pyr-300 uppercase flex items-center gap-2"><i class="fa-solid fa-code text-pyr-400"></i> Editor</span>
+            <button onclick="limparSandboxEditor()" class="text-xs text-pyr-400 hover:text-pyr-200 font-bold">LIMPAR</button>
+          </div>
+          <div class="p-3 bg-ink-900"><textarea id="sandboxCodeEditor"></textarea></div>
+          <div class="p-3 bg-ink-700/50 border-t-2 border-pyr-900/40">
+            <button id="btnRunSandbox" onclick="executarCodigo('sandbox')" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-play"></i> EXECUTAR</button>
+          </div>
+        </div>
+        <div class="bg-ink-800 border-2 border-pyr-900/40 rounded-2xl overflow-hidden flex flex-col">
+          <div class="bg-ink-700 px-4 py-2.5 border-b-2 border-pyr-900/40 flex items-center justify-between">
+            <span class="text-xs font-black text-pyr-300 uppercase flex items-center gap-2"><i class="fa-brands fa-python text-blue-400"></i> Python + Output</span>
+            <button onclick="limparOutput('sandboxOutput')" class="text-xs text-pyr-400 hover:text-pyr-200 font-bold">LIMPAR</button>
+          </div>
+          <div class="p-3 bg-ink-950 border-b-2 border-pyr-900/40 font-mono text-[11px] text-blue-300 overflow-x-auto max-h-32" id="translatedPythonSandbox"># Tradução aparece aqui...</div>
+          <div class="p-3 bg-black font-mono text-sm min-h-[240px] max-h-[400px] overflow-y-auto" id="sandboxOutput"><span class="text-pyr-600 italic">// Saída...</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec-perfil" class="max-w-4xl mx-auto space-y-6 hidden animate-slide-up">
+      <div class="bg-gradient-to-br from-pyr-800 to-ink-800 border-2 border-pyr-700/40 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-6 shadow-xl">
+        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-pyr-400 to-pyr-600 flex items-center justify-center text-4xl shadow-2xl shadow-pyr-500/30"><i class="fa-solid fa-user-ninja text-white"></i></div>
+        <div class="space-y-2 text-center sm:text-left flex-1">
+          <h2 class="text-2xl font-black text-white">Dev Pyrtugues</h2>
+          <p class="text-pyr-200 text-sm font-medium">Trilha Oficial de Algoritmos & Python</p>
+          <div class="flex flex-wrap gap-2 pt-2 justify-center sm:justify-start">
+            <span class="bg-yellow-500/20 border-2 border-yellow-500/40 px-3 py-1 rounded-full text-xs font-black text-yellow-300"><i class="fa-solid fa-bolt mr-1"></i><span id="perfilXP">0</span> XP</span>
+            <span class="bg-orange-500/20 border-2 border-orange-500/40 px-3 py-1 rounded-full text-xs font-black text-orange-300"><i class="fa-solid fa-fire mr-1"></i><span id="perfilStreak">1</span> DIAS</span>
+            <span class="bg-pyr-500/20 border-2 border-pyr-500/40 px-3 py-1 rounded-full text-xs font-black text-pyr-200"><i class="fa-solid fa-check-double mr-1"></i><span id="perfilConcluidas">0</span>/30</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-ink-800 border-2 border-pyr-900/40 rounded-2xl p-6 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-grn-500/20 mx-auto flex items-center justify-center text-3xl mb-3"><i class="fa-solid fa-certificate text-grn-400"></i></div>
+        <h3 class="text-xl font-black text-white mb-1">Certificado de Conclusão</h3>
+        <p class="text-pyr-300 text-sm mb-4 max-w-lg mx-auto">Complete todas as 30 lições para liberar seu certificado oficial!</p>
+        <button onclick="abrirModalCertificado()" id="btnCertificado" class="btn-3d bg-grn-500 hover:bg-grn-400 text-white border-grn-700 px-6 py-3 rounded-2xl text-sm disabled:opacity-40 inline-flex items-center gap-2" disabled><i class="fa-solid fa-lock"></i> BLOQUEADO</button>
+      </div>
+      <div>
+        <h3 class="text-xl font-black text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-trophy text-yellow-400"></i> Medalhas</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3" id="badgesContainer"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="md:hidden bg-ink-800 border-t-2 border-pyr-900/40 sticky bottom-0 z-30 flex items-center justify-around py-1.5">
+  <button onclick="mudarSecao('home')" class="flex flex-col items-center gap-0.5 text-pyr-400 hover:text-pyr-200 text-[10px] font-black py-1 px-3"><i class="fa-solid fa-house text-lg"></i> INÍCIO</button>
+  <button onclick="mudarSecao('pratica')" class="flex flex-col items-center gap-0.5 text-pyr-400 hover:text-pyr-200 text-[10px] font-black py-1 px-3"><i class="fa-solid fa-terminal text-lg"></i> SANDBOX</button>
+  <button onclick="abrirDicionario()" class="flex flex-col items-center gap-0.5 text-pyr-400 hover:text-pyr-200 text-[10px] font-black py-1 px-3"><i class="fa-solid fa-book text-lg"></i> DICIONÁRIO</button>
+  <button onclick="mudarSecao('perfil')" class="flex flex-col items-center gap-0.5 text-pyr-400 hover:text-pyr-200 text-[10px] font-black py-1 px-3"><i class="fa-solid fa-user text-lg"></i> PERFIL</button>
+</nav>
+
+<button id="btnBackToTop" onclick="voltarAoTopo()" class="fixed bottom-24 md:bottom-6 right-4 z-40 bg-pyr-500 hover:bg-pyr-400 text-white p-3 rounded-full shadow-2xl shadow-pyr-500/40 hidden transition-all" title="Topo"><i class="fa-solid fa-arrow-up"></i></button>
+
+<div id="inputModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-ink-800 border-2 border-pyr-500/40 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-pop">
+    <h3 class="text-lg font-black text-white flex items-center gap-2"><i class="fa-solid fa-terminal text-pyr-400"></i> ENTRADA DE DADOS</h3>
+    <p id="inputModalPrompt" class="text-pyr-200 text-sm font-bold">Digite um valor:</p>
+    <input type="text" id="inputModalText" onkeydown="if(event.key === 'Enter') responderInputModal()" class="w-full bg-ink-900 border-2 border-pyr-900/50 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-pyr-500 text-sm font-medium transition-colors" autofocus>
+    <div class="flex justify-end"><button onclick="responderInputModal()" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-5 py-2.5 rounded-xl text-sm">ENVIAR</button></div>
+  </div>
+</div>
+
+<div id="dictModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-ink-800 border-2 border-pyr-500/40 rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl animate-pop">
+    <div class="p-4 border-b-2 border-pyr-900/50 flex items-center justify-between">
+      <h3 class="text-lg font-black text-white flex items-center gap-2"><i class="fa-solid fa-book-bookmark text-pyr-400"></i> DICIONÁRIO</h3>
+      <button onclick="fecharModal('dictModal')" class="text-pyr-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+    </div>
+    <div class="p-3 border-b-2 border-pyr-900/50 bg-ink-900/50">
+      <input type="text" id="dictSearchInput" oninput="filtrarDicionario()" placeholder="Buscar termo..." class="w-full bg-ink-900 border-2 border-pyr-900/50 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-pyr-500 font-medium">
+    </div>
+    <div class="flex-1 overflow-y-auto p-4">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-ink-900/80 text-xs uppercase text-pyr-300 sticky top-0">
+          <tr><th class="p-2.5 font-black">Pyrtugues</th><th class="p-2.5 font-black">Python</th></tr>
+        </thead>
+        <tbody id="dictTableBody" class="divide-y divide-pyr-900/40 font-mono text-xs"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="certModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+  <div class="relative max-w-3xl w-full animate-pop">
+    <button onclick="fecharModal('certModal')" class="absolute -top-2 -right-2 z-10 bg-ink-700 hover:bg-ink-600 border-2 border-pyr-500/40 text-white w-10 h-10 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+    <div id="certificadoCard" class="bg-gradient-to-br from-ink-800 via-ink-800 to-pyr-900/40 border-4 border-pyr-500 rounded-3xl p-8 sm:p-12 space-y-6 text-center text-slate-100 relative overflow-hidden">
+      <div class="absolute -top-20 -right-20 w-60 h-60 bg-pyr-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-pyr-400/20 rounded-full blur-3xl"></div>
+      <div class="relative space-y-3">
+        <div class="text-5xl">🎓</div>
+        <h2 class="text-2xl sm:text-3xl font-black tracking-widest text-pyr-300 uppercase">Certificado</h2>
+        <p class="text-pyr-400 text-xs font-black uppercase tracking-widest">Academia Pyrtugues</p>
+      </div>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed relative">Certificamos que</p>
+      <h3 id="certAlunoNome" class="text-3xl sm:text-4xl font-black text-white border-b-2 border-pyr-500/40 pb-3 inline-block px-8 relative">Estudante</h3>
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed relative">concluiu com sucesso todas as <strong class="text-pyr-300">30 lições</strong> da trilha de Algoritmos e Programação em Português.</p>
+      <div class="flex items-center justify-between border-t-2 border-b-2 border-pyr-900/50 py-4 px-4 text-left text-xs text-slate-400 relative">
+        <div class="space-y-1"><p>Emissão: <strong class="text-slate-200" id="certData">—</strong></p><p>Código: <strong class="text-slate-200" id="certCodigo">—</strong></p></div>
+        <img id="certQRCode" src="" alt="QR" class="w-16 h-16 rounded-lg border-2 border-pyr-500/30 bg-white p-1">
+      </div>
+      <div class="flex justify-center gap-3 relative">
+        <button onclick="baixarCertificado()" class="btn-3d bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-download"></i> BAIXAR PNG</button>
+        <button onclick="window.print()" class="btn-3d bg-ink-700 hover:bg-ink-600 text-pyr-200 border-ink-500 px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-print"></i> IMPRIMIR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nomeModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+  <div class="bg-ink-800 border-2 border-pyr-500/40 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-pop">
+    <div class="text-center space-y-2">
+      <div class="w-14 h-14 bg-pyr-500/20 rounded-2xl mx-auto flex items-center justify-center text-2xl"><i class="fa-solid fa-graduation-cap text-pyr-400"></i></div>
+      <h3 class="text-xl font-black text-white">EMITIR CERTIFICADO</h3>
+      <p class="text-pyr-300 text-xs font-medium">Digite seu nome completo:</p>
+    </div>
+    <input type="text" id="inputNomeCertificado" placeholder="Ex: Maria Silva" class="w-full bg-ink-900 border-2 border-pyr-900/50 rounded-xl p-3.5 text-sm focus:outline-none focus:border-pyr-500 text-slate-200 font-medium">
+    <div class="flex gap-3">
+      <button onclick="fecharModal('nomeModal')" class="flex-1 py-3 bg-ink-700 hover:bg-ink-600 rounded-xl text-xs font-black text-pyr-200">CANCELAR</button>
+      <button onclick="emitirCertificado()" class="btn-3d flex-1 bg-pyr-500 hover:bg-pyr-400 text-white border-pyr-700 py-3 rounded-xl text-xs">EMITIR</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-xs"></div>
+
+<script>
+// ============================================================
+// TRADUTOR PORTADO DO MOTOR PYRTUGUES (Python)
+// ============================================================
+
+const DICIONARIO = {
+  "senão se": "elif", "senãose": "elif", "senão": "else",
+  "enquanto verdadeiro": "while True", "enquanto": "while",
+  "para cada": "for", "para": "for", "se": "if", "em": "in",
+  "quebrar": "break", "continuar": "continue", "passar": "pass",
+  "com": "with", "como": "as", "finalmente": "finally",
+  "função": "def", "classe": "class",
+  "retornar verdadeiro": "return True", "retornar falso": "return False",
+  "retornar nulo": "return None", "retornar": "return",
+  "produzir": "yield", "assíncrono": "async", "aguardar": "await",
+  "importar": "import", "de": "from",
+  "tentar": "try", "excepto": "except", "levantar": "raise",
+  "afirmar": "assert", "verificar": "assert", "lançar": "raise",
+  "global": "global", "nãolocal": "nonlocal",
+  "verdadeiro": "True", "falso": "False", "nulo": "None",
+  "vazio": "pass", "nada": "None",
+  "e também": "and", "ou então": "or", "não é": "is not",
+  "é": "is", "não": "not", "e": "and", "ou": "or",
+  "maior ou igual a": ">=", "menor ou igual a": "<=",
+  "maior ou igual": ">=", "menor ou igual": "<=",
+  "maior que": ">", "menor que": "<", "diferente de": "!=",
+  "igual a": "==", "fora de": "not in", "dentro de": "in",
+  "mais": "+", "menos": "-", "vezes": "*", "dividido por": "/",
+  "resto": "%", "potência": "**", "elevado a": "**",
+  "inteiro": "int", "decimal": "float", "texto": "str",
+  "booleano": "bool", "lista": "list", "dicionário": "dict",
+  "tupla": "tuple", "conjunto": "set",
+  "mostrar": "print", "imprimir": "print",
+  "pergunte": "input", "pergunta": "input",
+  "intervalo": "range", "tamanho": "len", "comprimento": "len",
+  "tipo": "type", "é instância": "isinstance", "é subclasse": "issubclass",
+  "somar": "sum", "máximo": "max", "mínimo": "min",
+  "ordenar": "sorted", "inverter": "reversed", "filtrar": "filter",
+  "mapear": "map", "zipar": "zip", "enumerar": "enumerate",
+  "todos": "all", "algum": "any",
+  "absoluto": "abs", "arredondar": "round", "elevar": "pow",
+  "hexadecimal": "hex", "octal": "oct", "binário": "bin",
+  "ordinal": "ord", "caractere": "chr",
+  "ajuda": "help", "atributos": "vars", "abrir": "open",
+  "formatar": "format", "representar": "repr",
+  "maiúsculas": "upper", "minúsculas": "lower",
+  "capitalizar": "capitalize", "título": "title",
+  "trocar": "replace", "dividir": "split", "juntar": "join",
+  "tirar espaços": "strip", "começa com": "startswith",
+  "termina com": "endswith", "encontrar": "find", "contar": "count",
+  "é dígito": "isdigit", "é letra": "isalpha", "é espaço": "isspace",
+  "adicionar": "append", "estender": "extend", "inserir": "insert",
+  "remover": "remove", "tirar": "pop", "limpar": "clear",
+  "copiar": "copy", "índice": "index",
+  "ordenar em ordem": "sort", "inverter ordem": "reverse",
+  "chaves": "keys", "valores": "values", "itens": "items",
+  "pegar": "get", "atualizar": "update",
+  "matemática": "math", "aleatório": "random",
+  "data e hora": "datetime", "tempo": "time",
+  "sistema": "os", "caminho": "path", "arquivo": "file",
+  "requisição": "request", "resposta": "response",
+  "expressão regular": "re",
+  "mais igual": "+=", "menos igual": "-=", "vezes igual": "*=",
+  "dividido igual": "/=", "resto igual": "%=", "potência igual": "**=",
+  "iniciar_jogo": "pygame.init", "sair_jogo": "pygame.quit",
+  "definir_modo": "pygame.display.set_mode",
+  "definir_titulo": "pygame.display.set_caption",
+  "atualizar_tela": "pygame.display.flip",
+  "preencher": "fill", "colar": "blit",
+  "SAIR": "pygame.QUIT", "TECLA_PRESSIONADA": "pygame.KEYDOWN",
+  "TECLA_SOLTA": "pygame.KEYUP",
+  "K_ESQUERDA": "pygame.K_LEFT", "K_DIREITA": "pygame.K_RIGHT",
+  "K_CIMA": "pygame.K_UP", "K_BAIXO": "pygame.K_DOWN",
+  "K_ESPACO": "pygame.K_SPACE", "K_ESCAPE": "pygame.K_ESCAPE",
+  "VERMELHO": "RED", "VERDE": "GREEN", "AZUL": "BLUE",
+  "AMARELO": "YELLOW", "BRANCO": "WHITE", "PRETO": "BLACK"
+};
+
+// Métodos: só substituem após ponto
+const METODOS = {
+  "maiúsculas": "upper", "minúsculas": "lower", "capitalizar": "capitalize",
+  "título": "title", "trocar": "replace", "dividir": "split",
+  "juntar": "join", "tirar espaços": "strip",
+  "começa com": "startswith", "termina com": "endswith",
+  "encontrar": "find", "contar": "count",
+  "é dígito": "isdigit", "é letra": "isalpha", "é espaço": "isspace",
+  "adicionar": "append", "estender": "extend", "inserir": "insert",
+  "remover": "remove", "tirar": "pop", "limpar": "clear",
+  "copiar": "copy", "índice": "index",
+  "ordenar em ordem": "sort", "inverter ordem": "reverse",
+  "chaves": "keys", "valores": "values", "itens": "items",
+  "pegar": "get", "atualizar": "update"
+};
+
+// Módulos: só substituem em import/from ou qualificados
+const MODULOS = {
+  "matemática": "math", "aleatório": "random",
+  "data e hora": "datetime", "tempo": "time",
+  "sistema": "os", "expressão regular": "re"
+};
+
+// Palavras que NÃO passam pela substituição direta
+const SKIP_DIRETO = new Set([
+  "e","ou","em","pergunte","pergunta","mais","menos","vezes",
+  "resto","potência","é",
+  ...Object.keys(METODOS), ...Object.keys(MODULOS),
+  "caminho","arquivo","requisição","resposta"
+]);
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Porta de _proteger_strings_e_comentarios
+function protegerStringsEComentarios(codigo) {
+  const blocos = [];
+  let resultado = '';
+  let i = 0;
+  const tamanho = codigo.length;
+
+  const guardar = (texto) => {
+    const idx = blocos.length;
+    blocos.push(texto);
+    return `__PYRT_STR_${idx}__`;
+  };
+
+  while (i < tamanho) {
+    // Comentário
+    if (codigo[i] === '#') {
+      const inicio = i;
+      while (i < tamanho && codigo[i] !== '\n') i++;
+      resultado += guardar(codigo.slice(inicio, i));
+      continue;
+    }
+
+    // Prefixo de string (r, u, b, f)
+    const inicioString = i;
+    if ('rRuUbBfF'.includes(codigo[i])) {
+      let j = i;
+      while (j < tamanho && 'rRuUbBfF'.includes(codigo[j])) j++;
+      if (j < tamanho && (codigo[j] === '"' || codigo[j] === "'")) {
+        i = j;
+      } else {
+        i = inicioString;
+      }
+    }
+
+    // String normal ou tripla
+    if (i < tamanho && (codigo[i] === '"' || codigo[i] === "'")) {
+      const quote = codigo[i];
+      const tripla = i + 2 < tamanho && codigo.slice(i, i + 3) === quote.repeat(3);
+
+      if (tripla) {
+        const delim = quote.repeat(3);
+        i += 3;
+        while (i < tamanho) {
+          if (codigo.slice(i, i + 3) === delim) { i += 3; break; }
+          i++;
+        }
+        resultado += guardar(codigo.slice(inicioString, i));
+        continue;
+      }
+
+      i++;
+      let escape = false;
+      while (i < tamanho) {
+        const c = codigo[i];
+        if (escape) escape = false;
+        else if (c === '\\') escape = true;
+        else if (c === quote) { i++; break; }
+        i++;
+      }
+      resultado += guardar(codigo.slice(inicioString, i));
+      continue;
+    }
+
+    resultado += codigo[i];
+    i++;
+  }
+
+  return { protegido: resultado, blocos };
+}
+
+function restaurarStrings(codigo, blocos) {
+  let r = codigo;
+  for (let i = 0; i < blocos.length; i++) {
+    r = r.split(`__PYRT_STR_${i}__`).join(blocos[i]);
+  }
+  return r;
+}
+
+// Substituir palavra com fronteiras de palavra (letras acentuadas)
+function substituirPalavra(texto, original, destino) {
+  const esc = escapeRegex(original);
+  const regex = new RegExp(
+    `(?<![A-Za-zÀ-ÿ0-9_])${esc}(?![A-Za-zÀ-ÿ0-9_])`,
+    'gi'
+  );
+  return texto.replace(regex, destino);
+}
+
+// Traduzir expressão dentro de f-string { ... }
+function traduzirExpressaoFString(expr) {
+  const { protegido, blocos } = protegerStringsEComentarios(expr);
+  let r = aplicarTraducoesBase(protegido);
+  return restaurarStrings(r, blocos);
+}
+
+// Porta de _traduzir_fstring
+function traduzirFStringCompleta(match) {
+  const texto = match;
+  const m = texto.match(/^([rRuUbBfF]{0,2})("""|'''|"|')/);
+  if (!m) return texto;
+  const prefixo = m[1];
+  const quote = m[2];
+  if (!prefixo.toLowerCase().includes('f')) return texto;
+
+  const fim = texto.length - quote.length;
+  if (fim <= 0) return texto;
+  const corpo = texto.slice(prefixo.length + quote.length, fim);
+
+  const partes = [];
+  let i = 0;
+
+  while (i < corpo.length) {
+    if (corpo.startsWith('{{', i)) { partes.push('{{'); i += 2; continue; }
+    if (corpo.startsWith('}}', i)) { partes.push('}}'); i += 2; continue; }
+    if (corpo[i] !== '{') { partes.push(corpo[i]); i++; continue; }
+
+    // Achar o } correspondente
+    let profundidade = 1;
+    let j = i + 1;
+    let stringAtual = null;
+    let escape = false;
+    while (j < corpo.length && profundidade) {
+      const c = corpo[j];
+      if (stringAtual) {
+        if (escape) escape = false;
+        else if (c === '\\') escape = true;
+        else if (c === stringAtual) stringAtual = null;
+      } else {
+        if (c === '"' || c === "'") stringAtual = c;
+        else if (c === '{') profundidade++;
+        else if (c === '}') profundidade--;
+      }
+      j++;
+    }
+
+    if (profundidade) {
+      partes.push(corpo.slice(i));
+      break;
+    }
+
+    const expr = corpo.slice(i + 1, j - 1);
+    partes.push('{' + traduzirExpressaoFString(expr) + '}');
+    i = j;
+  }
+
+  return prefixo + quote + partes.join('') + quote;
+}
+
+// Porta de _aplicar_traducoes_base
+function aplicarTraducoesBase(codigo) {
+  let resultado = codigo;
+
+  // Ordenar por comprimento decrescente
+  const chaves = Object.entries(DICIONARIO).sort((a, b) => b[0].length - a[0].length);
+
+  for (const [br, py] of chaves) {
+    // "se" só no começo de linha, seguido de expressão e ":"
+    if (br === "se") {
+      resultado = resultado.replace(/^(\s*)se(?=\s+.+:)/gim, '$1if');
+      continue;
+    }
+
+    if (SKIP_DIRETO.has(br)) continue;
+
+    resultado = substituirPalavra(resultado, br, py);
+  }
+
+  // "em" só em for-loops
+  resultado = resultado.replace(
+    /\bfor\s+([A-Za-zÀ-ÿ_][A-Za-zÀ-ÿ0-9_]*)\s+em\b/gi,
+    'for $1 in'
+  );
+
+  // Módulos: import/from ou qualificado
+  const modulosOrdenados = Object.entries(MODULOS).sort((a, b) => b[0].length - a[0].length);
+  for (const [br, py] of modulosOrdenados) {
+    const esc = escapeRegex(br);
+    resultado = resultado.replace(
+      new RegExp(`\\b(import|from)\\s+${esc}\\b`, 'gi'),
+      (_, p1) => `${p1} ${py}`
+    );
+    resultado = resultado.replace(
+      new RegExp(`(?<![A-Za-zÀ-ÿ0-9_])${esc}(?=\\s*\\.)`, 'gi'),
+      py
+    );
+  }
+
+  // Métodos só após ponto
+  const metodosOrdenados = Object.entries(METODOS).sort((a, b) => b[0].length - a[0].length);
+  for (const [br, py] of metodosOrdenados) {
+    const esc = escapeRegex(br);
+    resultado = resultado.replace(
+      new RegExp(`(?<=\\.)\\s*${esc}(?=\\s*\\()`, 'gi'),
+      py
+    );
+  }
+
+  // Operadores contextuais
+  const operadorContextual = (palavra, destino) => {
+    const esc = escapeRegex(palavra);
+    resultado = resultado.replace(
+      new RegExp(
+        `(?<![A-Za-zÀ-ÿ0-9_])` +
+        `([A-Za-zÀ-ÿ0-9_\\]\\)\\}]+)` +
+        `\\s+${esc}` +
+        `(?=\\s+[A-Za-zÀ-ÿ0-9_\\(\\[\\{+!\\-])`,
+        'gi'
+      ),
+      `$1 ${destino}`
+    );
+  };
+
+  operadorContextual("e", "and");
+  operadorContextual("ou", "or");
+
+  for (const [palavra, destino] of Object.entries({
+    "mais": "+", "menos": "-", "vezes": "*", "resto": "%", "potência": "**"
+  })) {
+    operadorContextual(palavra, destino);
+  }
+
+  return resultado;
+}
+
+// TRADUTOR PRINCIPAL (porta de traduzir())
+function traduzirPyrtugues(codigo) {
+  if (!codigo) return "";
+
+  // Passo 1: proteger f-strings e traduzir dentro de {}
+  const { protegido, blocos } = protegerStringsEComentarios(codigo);
+
+  // Passo 2: procurar f-strings nas strings protegidas e traduzir dentro
+  let resultado = protegido.replace(/__PYRT_STR_(\d+)__/g, (_, idx) => {
+    const original = blocos[parseInt(idx)];
+    // Se é f-string, traduzir as expressões dentro de {}
+    if (/^[rRuUbBfF]*["']/.test(original) && /[fF]/.test(original.match(/^[rRuUbBfF]*/)[0] || '')) {
+      return traduzirFStringCompleta(original);
+    }
+    return original;
+  });
+
+  // Passo 3: aplicar traduções base
+  const comStringsProtegidas = protegerStringsEComentarios(resultado);
+  let final = aplicarTraducoesBase(comStringsProtegidas.protegido);
+
+  // Passo 4: pergunte/pergunta → input
+  final = final.replace(/(?<![A-Za-zÀ-ÿ0-9_.])(pergunte|pergunta)\s*\(/gi, 'input(');
+
+  // Passo 5: restaurar strings
+  return restaurarStrings(final, comStringsProtegidas.blocos);
+}
+
+// ============================================================
+// ESTADO
+// ============================================================
+const DEFAULT_STATE = {
+  xp:0, streak:1, ultimoAcesso:new Date().toISOString().split('T')[0],
+  licaoAtual:"l1", licoesConcluidas:[], anotacoes:{}, somAtivo:true,
+  historicoDatas:[new Date().toISOString().split('T')[0]],
+  missoes:{ data:new Date().toISOString().split('T')[0], licoesHoje:0 }
+};
+let estado = { ...DEFAULT_STATE };
+
+// ============================================================
+// 30 LIÇÕES COM QUIZZES CORRETOS
+// ============================================================
+const LICOES = [
+  {id:"l1",mod:"Módulo 1: Fundamentos",tit:"Olá, Mundo!",res:"Aprenda a exibir mensagens.",conteudo:`<p>Bem-vindo! Vamos começar com o clássico "Olá, Mundo".</p><p>Use o comando <code class="bg-ink-900 px-1.5 py-0.5 rounded text-pyr-300 font-mono">mostrar()</code> para exibir mensagens.</p>`,cod:`mostrar("Olá, Brasil!")`,quiz:{p:"O que o mostrar() faz?",o:["Lê dados do teclado","Exibe mensagens na tela","Apaga o programa","Faz soma"],r:1}},
+  {id:"l2",mod:"Módulo 1: Fundamentos",tit:"Variáveis",res:"Guarde dados em variáveis.",conteudo:`<p>Variáveis são caixas onde você guarda informações para usar depois.</p>`,cod:`nome = "Vinicius"\nidade = 12\nmostrar(f"Olá {nome}, você tem {idade} anos!")`,quiz:{p:"Como criamos uma variável chamada pontos com valor 10?",o:["pontos == 10","pontos = 10","definir pontos 10","criar pontos 10"],r:1}},
+  {id:"l3",mod:"Módulo 1: Fundamentos",tit:"Tipos de Dados",res:"Números, textos e booleanos.",conteudo:`<p>Python tem vários tipos: inteiros, decimais, textos e booleanos.</p>`,cod:`inteiro = 10\ndecimal = 3.14\ntexto = "Oi"\nlogico = verdadeiro\nmostrar(f"Tipo: {tipo(inteiro)}")`,quiz:{p:"Qual o tipo do valor 3.14?",o:["Inteiro","Decimal (float)","Texto","Booleano"],r:1}},
+  {id:"l4",mod:"Módulo 1: Fundamentos",tit:"Operações Matemáticas",res:"Somar, subtrair, multiplicar.",conteudo:`<p>Em Pyrtugues usamos <code>mais</code>, <code>menos</code>, <code>vezes</code> e <code>dividido por</code>.</p>`,cod:`soma = 10 mais 5\nmult = 4 vezes 3\nmostrar(soma)\nmostrar(mult)`,quiz:{p:"Como se escreve '5 × 3' em Pyrtugues?",o:["5 x 3","5 vezes 3","5 * 3","5 multiplicar 3"],r:1}},
+  {id:"l5",mod:"Módulo 1: Fundamentos",tit:"Entrada do Usuário",res:"Use pergunte() para interagir.",conteudo:`<p>Use <code>pergunte()</code> para pedir dados ao usuário.</p>`,cod:`nome = pergunte("Qual seu nome? ")\nmostrar("Olá, " + nome)`,quiz:{p:"Qual comando pede dados ao usuário?",o:["mostrar()","pergunte()","pegar()","ler()"],r:1}},
+  {id:"l6",mod:"Módulo 1: Fundamentos",tit:"F-Strings",res:"Misture texto e variáveis.",conteudo:`<p>Use <code>f"texto {variavel}"</code> para juntar tudo.</p>`,cod:`n = "Ana"\ni = 10\nmostrar(f"{n} tem {i} anos.")`,quiz:{p:"O que usamos para inserir variáveis em textos?",o:["Colchetes []","Chaves {} dentro de f-string","Parênteses ()","Aspas duplas"],r:1}},
+  {id:"l7",mod:"Módulo 2: Decisões",tit:"Condicional Se",res:"Tome decisões no código.",conteudo:`<p>Use <code>se</code> para executar código sob condição.</p>`,cod:`idade = 18\nse idade maior ou igual a 18:\n    mostrar("Maior de idade")`,quiz:{p:"Como se escreve 'maior ou igual' em Pyrtugues?",o:[">= só","maior ou igual a",">=","mais grande que"],r:1}},
+  {id:"l8",mod:"Módulo 2: Decisões",tit:"Senão",res:"Alternativas condicionais.",conteudo:`<p>Use <code>senão</code> para o caso contrário.</p>`,cod:`n = 5\nse n maior que 10:\n    mostrar("Grande")\nsenão:\n    mostrar("Pequeno")`,quiz:{p:"Qual palavra é equivalente ao 'else' do Python?",o:["outro","senão","senão se","caso"],r:1}},
+  {id:"l9",mod:"Módulo 2: Decisões",tit:"Senão Se",res:"Múltiplas condições.",conteudo:`<p>Use <code>senão se</code> para várias condições.</p>`,cod:`nota = 7\nse nota maior ou igual a 9:\n    mostrar("Ótimo")\nsenão se nota maior ou igual a 7:\n    mostrar("Bom")\nsenão:\n    mostrar("Estude")`,quiz:{p:"Como se escreve o 'elif' em Pyrtugues?",o:["senão","senão se","outro se","mais se"],r:1}},
+  {id:"l10",mod:"Módulo 2: Decisões",tit:"Operadores Lógicos",res:"E / Ou / Não.",conteudo:`<p>Combine condições com <code>e</code>, <code>ou</code> e <code>não</code>.</p>`,cod:`sol = verdadeiro\nferiado = verdadeiro\nse sol e feriado:\n    mostrar("Praia!")`,quiz:{p:"Como se escreve o AND em Pyrtugues?",o:["ou","e","não","também"],r:1}},
+  {id:"l11",mod:"Módulo 3: Repetições",tit:"Enquanto",res:"Repita enquanto for verdade.",conteudo:`<p>Use <code>enquanto</code> para repetir código.</p>`,cod:`c = 1\nenquanto c menor ou igual a 5:\n    mostrar(c)\n    c = c mais 1`,quiz:{p:"O que o 'enquanto' faz?",o:["Repete código se a condição for verdadeira","Faz uma soma","Lê dados","Compara textos"],r:0}},
+  {id:"l12",mod:"Módulo 3: Repetições",tit:"Para e Intervalo",res:"Loops com contador.",conteudo:`<p>Use <code>para ... em intervalo()</code>.</p>`,cod:`para i em intervalo(1, 6):\n    mostrar(i)`,quiz:{p:"O que intervalo(1, 6) gera?",o:["1, 2, 3, 4, 5","1, 2, 3, 4, 5, 6","0, 1, 2, 3, 4, 5","2, 3, 4, 5, 6"],r:0}},
+  {id:"l13",mod:"Módulo 3: Repetições",tit:"Quebrar",res:"Saia do loop.",conteudo:`<p><code>quebrar</code> encerra o loop.</p>`,cod:`para i em intervalo(1, 10):\n    se i igual a 5:\n        quebrar\n    mostrar(i)`,quiz:{p:"O que o comando 'quebrar' faz?",o:["Reinicia o loop","Para o loop imediatamente","Gera erro","Pausa"],r:1}},
+  {id:"l14",mod:"Módulo 3: Repetições",tit:"Continuar",res:"Pule uma iteração.",conteudo:`<p><code>continuar</code> pula para a próxima.</p>`,cod:`para i em intervalo(1, 6):\n    se i igual a 3:\n        continuar\n    mostrar(i)`,quiz:{p:"O que o 'continuar' faz?",o:["Sai do loop","Pula para a próxima iteração","Para tudo","Gera erro"],r:1}},
+  {id:"l15",mod:"Módulo 3: Repetições",tit:"Tabuada",res:"Projeto: tabuada automática.",conteudo:`<p>Vamos fazer uma tabuada!</p>`,cod:`n = 7\npara i em intervalo(1, 11):\n    mostrar(f"{n} x {i} = {n * i}")`,quiz:{p:"Para que serve a f-string aqui?",o:["Apagar código","Interpolar variáveis dentro do texto","Fazer divisão","Repetir"],r:1}},
+  {id:"l16",mod:"Módulo 4: Coleções",tit:"Listas",res:"Sequências ordenadas.",conteudo:`<p>Listas guardam vários itens.</p>`,cod:`frutas = ["Maçã", "Banana", "Uva"]\nmostrar(frutas[0])\nmostrar(tamanho(frutas))`,quiz:{p:"Qual é o índice do primeiro item de uma lista?",o:["1","0","-1","depende"],r:1}},
+  {id:"l17",mod:"Módulo 4: Coleções",tit:"Adicionar em Listas",res:"Use adicionar().",conteudo:`<p>Use <code>adicionar()</code> para inserir item.</p>`,cod:`lista = ["A", "B"]\nlista.adicionar("C")\nmostrar(lista)`,quiz:{p:"Qual método adiciona um item ao fim da lista em Pyrtugues?",o:["adicionar()","append()","inserir()","colocar()"],r:0}},
+  {id:"l18",mod:"Módulo 4: Coleções",tit:"Remover de Listas",res:"Use remover().",conteudo:`<p>Remova itens com <code>remover()</code>.</p>`,cod:`lista = [1, 2, 3, 4]\nlista.remover(2)\nmostrar(lista)`,quiz:{p:"Como remover o item '2' de uma lista em Pyrtugues?",o:["lista.delete(2)","lista.remover(2)","lista.pop(2)","lista.remove(2)"],r:1}},
+  {id:"l19",mod:"Módulo 4: Coleções",tit:"Dicionários",res:"Pares chave-valor.",conteudo:`<p>Dicionários usam <code>{}</code> com chave:valor.</p>`,cod:`aluno = {"nome": "Ana", "nota": 9}\nmostrar(aluno["nome"])`,quiz:{p:"Como acessar o valor da chave 'nome'?",o:["aluno(nome)","aluno['nome']","aluno.nome()","aluno->nome"],r:1}},
+  {id:"l20",mod:"Módulo 4: Coleções",tit:"Percorrer Coleções",res:"Itere com para.",conteudo:`<p>Percorra listas com <code>para</code>.</p>`,cod:`nomes = ["Ana", "Bruno", "Carla"]\npara n em nomes:\n    mostrar(f"Aluno: {n}")`,quiz:{p:"O que o comando 'para' faz?",o:["Compara valores","Itera sobre uma sequência","Faz soma","Lê do teclado"],r:1}},
+  {id:"l21",mod:"Módulo 5: Funções",tit:"Criar Funções",res:"Reutilize código.",conteudo:`<p>Use <code>função</code> para definir.</p>`,cod:`função saudar():\n    mostrar("Olá!")\n\nsaudar()\nsaudar()`,quiz:{p:"Qual palavra define uma função em Pyrtugues?",o:["def","função","func","metodo"],r:1}},
+  {id:"l22",mod:"Módulo 5: Funções",tit:"Parâmetros",res:"Passe dados para funções.",conteudo:`<p>Funções recebem parâmetros.</p>`,cod:`função saudar(nome):\n    mostrar(f"Olá, {nome}!")\n\nsaudar("Ana")\nsaudar("Bia")`,quiz:{p:"O que são parâmetros em uma função?",o:["Saídas do programa","Valores de entrada da função","Erros","Números aleatórios"],r:1}},
+  {id:"l23",mod:"Módulo 5: Funções",tit:"Retorno",res:"Devolva valores.",conteudo:`<p><code>retornar</code> devolve um valor.</p>`,cod:`função somar(a, b):\n    retornar a mais b\n\nresultado = somar(5, 3)\nmostrar(resultado)`,quiz:{p:"Qual comando devolve um valor em Pyrtugues?",o:["enviar","retornar","devolver","devolta"],r:1}},
+  {id:"l24",mod:"Módulo 5: Funções",tit:"Escopo",res:"Variáveis locais e globais.",conteudo:`<p>Variáveis dentro de funções são locais.</p>`,cod:`x = 10\nfunção teste():\n    y = 5\n    mostrar(x mais y)\nteste()`,quiz:{p:"Onde uma variável LOCAL pode ser usada?",o:["Só dentro da função onde foi criada","Em qualquer lugar do código","Só no final","Só no início"],r:0}},
+  {id:"l25",mod:"Módulo 6: Strings",tit:"Maiúsculas e Minúsculas",res:"Manipule textos.",conteudo:`<p>Use <code>maiúsculas()</code> e <code>minúsculas()</code>.</p>`,cod:`texto = "Olá Mundo"\nmostrar(texto.maiúsculas())\nmostrar(texto.minúsculas())`,quiz:{p:"Em Pyrtugues, qual método deixa o texto em MAIÚSCULAS?",o:["upper()","maiúsculas()","grande()","caps()"],r:1}},
+  {id:"l26",mod:"Módulo 6: Strings",tit:"Dividir e Juntar",res:"Divida textos.",conteudo:`<p>Divida strings com <code>dividir()</code>.</p>`,cod:`frase = "a,b,c"\npartes = frase.dividir(",")\nmostrar(partes)`,quiz:{p:"Em Pyrtugues, como dividimos a string 'a,b,c' pela vírgula?",o:["frase.split(',')","frase.dividir(',')","frase.cortar(',')","frase.separar(',')"],r:1}},
+  {id:"l27",mod:"Módulo 6: Strings",tit:"Trocar Texto",res:"Use trocar().",conteudo:`<p>Substitua partes do texto com <code>trocar()</code>.</p>`,cod:`texto = "Olá mundo"\nnovo = texto.trocar("mundo", "Brasil")\nmostrar(novo)`,quiz:{p:"Em Pyrtugues, como trocar 'mundo' por 'Brasil' no texto?",o:["texto.replace('mundo','Brasil')","texto.trocar('mundo','Brasil')","texto.mudar('mundo','Brasil')","texto.substituir('mundo','Brasil')"],r:1}},
+  {id:"l28",mod:"Módulo 7: Projetos",tit:"Calculadora",res:"Projeto: calculadora.",conteudo:`<p>Vamos fazer uma calculadora!</p>`,cod:`a = 10\nb = 5\nmostrar(f"Soma: {a mais b}")\nmostrar(f"Sub: {a menos b}")\nmostrar(f"Mult: {a vezes b}")\nmostrar(f"Div: {a dividido por b}")`,quiz:{p:"Como se escreve divisão em Pyrtugues?",o:["mais","menos","vezes","dividido por"],r:3}},
+  {id:"l29",mod:"Módulo 7: Projetos",tit:"Jogo de Adivinhação",res:"Projeto: mini game.",conteudo:`<p>Crie um jogo de adivinhação!</p>`,cod:`secreto = 7\nchute = 7\nse chute igual a secreto:\n    mostrar("Você acertou!")\nsenão:\n    mostrar("Errou!")`,quiz:{p:"Como se escreve igualdade em Pyrtugues?",o:["=","==","igual a","mesmo que"],r:2}},
+  {id:"l30",mod:"Módulo 7: Projetos",tit:"Parabéns!",res:"Você completou!",conteudo:`<p>🎉 Parabéns! Você completou as 30 lições do Pyrtugues!</p>`,cod:`mostrar("=== FIM DO CURSO ===")\nmostrar("Parabéns, programador!")`,quiz:{p:"Quem criou o Pyrtugues?",o:["Vinicius Caracciolo","Alan Turing","Bill Gates","Linus Torvalds"],r:0}}
+];
+
+const BADGES = [
+  {id:"b1",n:"Primeira Vitória",d:"Complete 1 lição",i:"fa-bullseye",c:"text-yellow-400"},
+  {id:"b2",n:"Mestre Python",d:"Módulo 2 completo",i:"fa-snake",c:"text-blue-400"},
+  {id:"b3",n:"Chama Eterna",d:"Streak de 7 dias",i:"fa-fire",c:"text-orange-400"},
+  {id:"b4",n:"Game Dev",d:"Módulo 7 completo",i:"fa-gamepad",c:"text-pyr-300"},
+  {id:"b5",n:"Mestre Pyrtugues",d:"30 lições completas",i:"fa-trophy",c:"text-yellow-300"},
+  {id:"b6",n:"Perfeccionista",d:"100% nos quizzes",i:"fa-gem",c:"text-pyr-200"}
+];
+
+let pyodide = null, editorLicao = null, editorSandbox = null, audioCtx = null, inputResolver = null;
+
+function salvarEstado() { localStorage.setItem('pyrtugues_v3', JSON.stringify(estado)); }
+function carregarEstado() {
+  try { const s = localStorage.getItem('pyrtugues_v3'); if (s) estado = { ...DEFAULT_STATE, ...JSON.parse(s) }; } catch(e){}
+}
+function processarStreak() {
+  const hoje = new Date().toISOString().split('T')[0];
+  if (estado.ultimoAcesso !== hoje) {
+    const diff = Math.floor((new Date(hoje) - new Date(estado.ultimoAcesso)) / 86400000);
+    if (diff === 1) estado.streak += 1;
+    else if (diff > 1) estado.streak = 1;
+    estado.ultimoAcesso = hoje;
+    if (!estado.historicoDatas.includes(hoje)) estado.historicoDatas.push(hoje);
+    if (estado.historicoDatas.length > 60) estado.historicoDatas = estado.historicoDatas.slice(-60);
+    salvarEstado();
+  }
+}
+function processarMissoes() {
+  const hoje = new Date().toISOString().split('T')[0];
+  if (estado.missoes.data !== hoje) { estado.missoes = { data:hoje, licoesHoje:0 }; salvarEstado(); }
+}
+function tocarSom(tipo) {
+  if (!estado.somAtivo) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    const n = audioCtx.currentTime;
+    if (tipo === 'sucesso') { o.frequency.setValueAtTime(523.25, n); o.frequency.exponentialRampToValueAtTime(880, n+0.15); g.gain.setValueAtTime(0.08, n); g.gain.exponentialRampToValueAtTime(0.001, n+0.2); o.start(n); o.stop(n+0.2); }
+    else if (tipo === 'erro') { o.frequency.setValueAtTime(220, n); o.frequency.exponentialRampToValueAtTime(110, n+0.2); g.gain.setValueAtTime(0.1, n); g.gain.exponentialRampToValueAtTime(0.001, n+0.25); o.start(n); o.stop(n+0.25); }
+    else { o.frequency.setValueAtTime(440, n); g.gain.setValueAtTime(0.04, n); g.gain.exponentialRampToValueAtTime(0.001, n+0.1); o.start(n); o.stop(n+0.1); }
+  } catch(e){}
+}
+function mostrarToast(msg, tipo = "info") {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  const colors = tipo === 'error' ? 'bg-red-600 border-red-400' : 'bg-ink-700 border-pyr-500/50';
+  t.className = `pointer-events-auto flex items-center justify-between gap-3 px-4 py-3 rounded-2xl shadow-2xl text-xs font-black text-white border-2 ${colors} animate-pop`;
+  t.innerHTML = `<span>${msg}</span><button onclick="this.parentElement.remove()" class="opacity-60 hover:opacity-100"><i class="fa-solid fa-xmark"></i></button>`;
+  c.appendChild(t);
+  setTimeout(() => { if (t.parentElement) t.remove(); }, 5000);
+}
+function mudarSecao(id) {
+  ['home','lesson','pratica','perfil'].forEach(s => document.getElementById('sec-'+s)?.classList.add('hidden'));
+  document.getElementById('sec-'+id)?.classList.remove('hidden');
+  if (id === 'pratica' && editorSandbox) setTimeout(() => editorSandbox.refresh(), 100);
+  if (window.innerWidth < 768) fecharSidebar();
+  document.getElementById('mainContainer').scrollTo({top:0, behavior:'smooth'});
+}
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar'), ov = document.getElementById('sidebarOverlay');
+  if (window.innerWidth < 768) { sb.classList.toggle('-translate-x-full'); ov.classList.toggle('hidden'); }
+  else sb.classList.toggle('hidden');
+}
+function fecharSidebar() {
+  document.getElementById('sidebar').classList.add('-translate-x-full');
+  document.getElementById('sidebarOverlay').classList.add('hidden');
+}
+function abrirLicao(id) {
+  const l = LICOES.find(x => x.id === id);
+  if (!l) return;
+  estado.licaoAtual = id; salvarEstado();
+  mudarSecao('lesson');
+  document.getElementById('lessonCategory').textContent = l.mod;
+  document.getElementById('lessonTitle').textContent = l.tit;
+  document.getElementById('lessonBody').innerHTML = l.conteudo;
+  document.getElementById('lessonNotes').value = estado.anotacoes[id] || "";
+  if (editorLicao) {
+    editorLicao.getDoc().setValue(l.cod);
+    editorLicao.clearHistory();
+    setTimeout(() => editorLicao.refresh(), 0);
+    setTimeout(() => editorLicao.refresh(), 150);
+  }
+  renderizarQuiz(l.quiz);
+  renderizarListaLicoes();
+  renderizarHeader();
+}
+function navegarLicao(dir) {
+  const i = LICOES.findIndex(l => l.id === estado.licaoAtual);
+  const n = i + dir;
+  if (n >= 0 && n < LICOES.length) abrirLicao(LICOES[n].id);
+}
+function continuarJornada() {
+  const nf = LICOES.filter(l => !estado.licoesConcluidas.includes(l.id));
+  abrirLicao(nf.length > 0 ? nf[0].id : "l30");
+}
+function restaurarCodigoLicao() {
+  const l = LICOES.find(x => x.id === estado.licaoAtual);
+  if (l && editorLicao) { editorLicao.getDoc().setValue(l.cod); editorLicao.clearHistory(); }
+}
+function limparSandboxEditor() { if (editorSandbox) editorSandbox.getDoc().setValue(""); }
+function limparOutput(id) { document.getElementById(id).innerHTML = '<span class="text-pyr-600 italic">// Saída limpa...</span>'; }
+function voltarAoTopo() { document.getElementById('mainContainer').scrollTo({top:0, behavior:'smooth'}); }
+
+function renderizarListaLicoes(filtro = "") {
+  const list = document.getElementById('lessonsList'); list.innerHTML = "";
+  const f = filtro.toLowerCase();
+  LICOES.forEach(l => {
+    const nota = estado.anotacoes[l.id] || "";
+    const m = !f || l.tit.toLowerCase().includes(f) || l.res.toLowerCase().includes(f) || nota.toLowerCase().includes(f);
+    if (!m) return;
+    const done = estado.licoesConcluidas.includes(l.id);
+    const ativa = estado.licaoAtual === l.id;
+    const b = document.createElement('button');
+    b.onclick = () => abrirLicao(l.id);
+    b.className = `w-full text-left p-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between border-2 ${ativa ? 'bg-pyr-500/20 border-pyr-500/60 text-pyr-200' : done ? 'border-transparent bg-pyr-900/20 text-pyr-200' : 'border-transparent text-slate-400 hover:bg-ink-700'}`;
+    b.innerHTML = `<div class="flex items-center gap-2 truncate"><i class="fa-solid ${done ? 'fa-circle-check text-pyr-400' : 'fa-circle text-ink-500'} text-xs"></i><span class="truncate">${l.tit}</span></div>`;
+    list.appendChild(b);
+  });
+}
+function filtrarLicoes() { renderizarListaLicoes(document.getElementById('searchInput').value); }
+function renderizarHeader() {
+  document.getElementById('userXP').textContent = estado.xp;
+  document.getElementById('streakCount').textContent = estado.streak;
+  document.getElementById('perfilXP').textContent = estado.xp;
+  document.getElementById('perfilStreak').textContent = estado.streak;
+  document.getElementById('perfilConcluidas').textContent = estado.licoesConcluidas.length;
+  document.getElementById('homeCompletedCount').textContent = `${estado.licoesConcluidas.length}/30`;
+  document.getElementById('homeXpCount').textContent = estado.xp;
+  document.getElementById('homeBadgeCount').textContent = `${estado.badges?.length || 0}/6`;
+  document.getElementById('completedCount').textContent = `${estado.licoesConcluidas.length} / 30`;
+  const pct = Math.round((estado.licoesConcluidas.length / 30) * 100);
+  document.getElementById('progressPercent').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+  const btn = document.getElementById('btnCertificado'), status = document.getElementById('homeCertStatus');
+  if (estado.licoesConcluidas.length >= 30) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-certificate"></i> EMITIR';
+    if (status) status.textContent = "Liberado 🎉";
+  }
+}
+function renderizarHome() {
+  const grid = document.getElementById('modulesGrid'); if (!grid) return;
+  grid.innerHTML = "";
+  const mods = {};
+  LICOES.forEach(l => { if (!mods[l.mod]) mods[l.mod] = []; mods[l.mod].push(l); });
+  Object.entries(mods).forEach(([nome, licoes]) => {
+    const done = licoes.filter(l => estado.licoesConcluidas.includes(l.id)).length;
+    const pct = Math.round((done / licoes.length) * 100);
+    const c = document.createElement('div');
+    c.onclick = () => abrirLicao(licoes[0].id);
+    c.className = "bg-ink-800 border-2 border-pyr-900/40 rounded-2xl p-5 cursor-pointer hover:border-pyr-500/60 hover:-translate-y-1 transition-all";
+    c.innerHTML = `
+      <div class="flex justify-between items-start mb-2">
+        <span class="text-[10px] font-black px-2.5 py-1 bg-pyr-500/20 text-pyr-300 rounded-full border-2 border-pyr-500/30">${nome.split(":")[0]}</span>
+        <span class="text-xs font-black text-pyr-400">${pct}%</span>
+      </div>
+      <h4 class="font-black text-base text-white mb-3">${nome.split(": ")[1] || nome}</h4>
+      <div class="w-full bg-ink-900 rounded-full h-2.5 p-0.5 border-2 border-pyr-900/50 mb-2">
+        <div class="bg-gradient-to-r from-pyr-500 to-pyr-400 h-full rounded-full transition-all" style="width:${pct}%"></div>
+      </div>
+      <div class="flex justify-between text-xs">
+        <span class="text-slate-400 font-bold">${done}/${licoes.length}</span>
+        <span class="text-pyr-400 font-black">INICIAR →</span>
+      </div>`;
+    grid.appendChild(c);
+  });
+}
+function renderizarHeatmap() {
+  const grid = document.getElementById('heatmapGrid'); if (!grid) return;
+  grid.innerHTML = "";
+  const hoje = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(hoje); d.setDate(d.getDate() - i);
+    const iso = d.toISOString().split('T')[0];
+    const on = estado.historicoDatas.includes(iso);
+    const c = document.createElement('div');
+    c.className = `aspect-square rounded-md border-2 ${on ? 'bg-pyr-500 border-pyr-400 shadow-lg shadow-pyr-500/30' : 'bg-ink-900 border-pyr-900/40'}`;
+    c.title = iso;
+    grid.appendChild(c);
+  }
+}
+function renderizarBadges() {
+  const grid = document.getElementById('badgesContainer'); if (!grid) return;
+  grid.innerHTML = "";
+  BADGES.forEach(b => {
+    const on = b.id === "b1" ? estado.licoesConcluidas.length >= 1
+      : b.id === "b2" ? ["l6","l7","l8","l9","l10"].every(x => estado.licoesConcluidas.includes(x))
+      : b.id === "b3" ? estado.streak >= 7
+      : b.id === "b4" ? ["l28","l29","l30"].every(x => estado.licoesConcluidas.includes(x))
+      : b.id === "b5" ? estado.licoesConcluidas.length >= 30
+      : estado.licoesConcluidas.length >= 30;
+    const c = document.createElement('div');
+    c.className = `p-4 rounded-2xl border-2 text-center transition-all ${on ? 'bg-gradient-to-br from-pyr-800 to-ink-800 border-pyr-500/60' : 'bg-ink-800/50 border-pyr-900/30 opacity-50'}`;
+    c.innerHTML = `
+      <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl mb-2 ${on ? 'bg-pyr-500/30 ' + b.c + ' animate-glow' : 'bg-ink-700 text-ink-500'}"><i class="fa-solid ${b.i}"></i></div>
+      <div class="text-xs font-black text-white mb-1">${b.n}</div>
+      <div class="text-[10px] text-slate-400 mb-2">${b.d}</div>
+      <span class="text-[9px] font-black px-2 py-0.5 rounded-full ${on ? 'bg-pyr-500/30 text-pyr-200' : 'bg-ink-700 text-ink-400'}">${on ? '✓ DESBLOQUEADA' : '🔒 BLOQUEADA'}</span>`;
+    grid.appendChild(c);
+  });
+}
+
+function renderizarQuiz(q) {
+  const c = document.getElementById('quizContainer');
+  if (!q) { c.classList.add('hidden'); return; }
+  c.classList.remove('hidden');
+  document.getElementById('quizQuestion').textContent = q.p;
+  const o = document.getElementById('quizOptions'); o.innerHTML = "";
+  document.getElementById('quizFeedback').classList.add('hidden');
+  q.o.forEach((opt, i) => {
+    const b = document.createElement('button');
+    b.className = "w-full text-left bg-ink-700 hover:bg-ink-600 border-2 border-pyr-900/40 hover:border-pyr-500/60 p-3.5 rounded-xl text-sm font-bold transition-all text-slate-200 flex items-center gap-3";
+    b.innerHTML = `<span class="w-6 h-6 rounded-lg bg-pyr-500/20 text-pyr-300 flex items-center justify-center text-xs font-black">${String.fromCharCode(65+i)}</span> ${opt}`;
+    b.onclick = () => verificarResposta(i, q.r);
+    o.appendChild(b);
+  });
+}
+function verificarResposta(esc, cor) {
+  const fb = document.getElementById('quizFeedback');
+  fb.classList.remove('hidden');
+  if (esc === cor) {
+    fb.className = "p-4 rounded-xl text-sm font-black text-center bg-grn-500/20 text-grn-400 border-2 border-grn-500/50";
+    fb.textContent = "✨ CORRETO! +50 XP";
+    tocarSom('sucesso');
+    confetti({particleCount:60, spread:70, origin:{y:0.7}, colors:['#7c3aed','#a78bfa','#10b981']});
+    ganharXP(50);
+    if (!estado.licoesConcluidas.includes(estado.licaoAtual)) {
+      estado.licoesConcluidas.push(estado.licaoAtual);
+      estado.missoes.licoesHoje = (estado.missoes.licoesHoje || 0) + 1;
+      atualizarMissoes();
+    }
+    salvarEstado(); renderizarListaLicoes(); renderizarHeader();
+  } else {
+    fb.className = "p-4 rounded-xl text-sm font-black text-center bg-red-500/20 text-red-300 border-2 border-red-500/50";
+    fb.textContent = "❌ INCORRETO! Tente de novo.";
+    tocarSom('erro');
+  }
+}
+function ganharXP(q) { estado.xp += q; salvarEstado(); renderizarHeader(); }
+function atualizarMissoes() {
+  const m = estado.missoes.licoesHoje || 0;
+  const pct = Math.min((m/2)*100, 100);
+  const p = document.getElementById('m1Prog'), b = document.getElementById('m1Bar');
+  if (p) p.textContent = `${Math.min(m,2)}/2`;
+  if (b) b.style.width = pct + '%';
+}
+
+async function inicializarPyodide() {
+  const badge = document.getElementById('pyodideStatusBadge');
+  try {
+    pyodide = await loadPyodide({ stdout: (t) => appendOutput(t, 'normal'), stderr: (t) => appendOutput(t, 'error') });
+    if (badge) badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-pyr-400"></span><span class="text-pyr-300">Pyodide OK</span>';
+    pyodide.setStdin({ stdin: () => pedirInputModal() });
+  } catch(e) {
+    console.error(e);
+    if (badge) badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-red-400"></span><span class="text-red-300">Offline</span>';
+    mostrarToast("Pyodide offline. Só tradução disponível.", "error");
+  }
+}
+let outputAtual = null;
+function appendOutput(txt, tipo) {
+  if (!outputAtual) return;
+  const el = document.createElement('div');
+  el.className = tipo === 'error' ? 'text-red-400 font-mono text-xs' : 'text-grn-400 font-mono text-xs';
+  el.textContent = txt;
+  outputAtual.appendChild(el);
+  outputAtual.scrollTop = outputAtual.scrollHeight;
+}
+function pedirInputModal() {
+  return new Promise(res => {
+    inputResolver = res;
+    document.getElementById('inputModal').classList.remove('hidden');
+    document.getElementById('inputModalText').value = "";
+    setTimeout(() => document.getElementById('inputModalText').focus(), 50);
+  });
+}
+function responderInputModal() {
+  const val = document.getElementById('inputModalText').value;
+  document.getElementById('inputModal').classList.add('hidden');
+  if (inputResolver) { inputResolver(val); inputResolver = null; }
+}
+async function executarCodigo(origem) {
+  const btn = document.getElementById(origem === 'lesson' ? 'btnRunLesson' : 'btnRunSandbox');
+  const editor = origem === 'lesson' ? editorLicao : editorSandbox;
+  const output = document.getElementById(origem === 'lesson' ? 'lessonOutput' : 'sandboxOutput');
+  const pyDiv = document.getElementById(origem === 'lesson' ? 'translatedPythonLesson' : 'translatedPythonSandbox');
+  outputAtual = output; output.innerHTML = "";
+  const cp = editor.getValue(), cpy = traduzirPyrtugues(cp);
+  pyDiv.textContent = "# Python traduzido:\n" + cpy;
+  if (!pyodide) { appendOutput("Pyodide não carregado.", "error"); return; }
+  const orig = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> RODANDO...';
+  tocarSom('executar');
+  try {
+    await pyodide.runPythonAsync(cpy);
+    tocarSom('sucesso');
+    if (origem === 'lesson') ganharXP(15);
+  } catch(e) { appendOutput(String(e), 'error'); tocarSom('erro'); }
+  finally { btn.disabled = false; btn.innerHTML = orig; }
+}
+
+function abrirDicionario() { document.getElementById('dictModal').classList.remove('hidden'); renderizarDicionario(); }
+function renderizarDicionario(f = "") {
+  const tb = document.getElementById('dictTableBody'); tb.innerHTML = "";
+  const ff = f.toLowerCase();
+  Object.entries(DICIONARIO).forEach(([pt, py]) => {
+    if (ff && !pt.toLowerCase().includes(ff) && !py.toLowerCase().includes(ff)) return;
+    const tr = document.createElement('tr');
+    tr.className = "hover:bg-pyr-900/20";
+    tr.innerHTML = `<td class="p-2.5 text-pyr-300 font-black">${pt}</td><td class="p-2.5 text-blue-300">${py}</td>`;
+    tb.appendChild(tr);
+  });
+}
+function filtrarDicionario() { renderizarDicionario(document.getElementById('dictSearchInput').value); }
+function fecharModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+function abrirModalCertificado() {
+  if (estado.licoesConcluidas.length < 30) { mostrarToast("Complete as 30 lições primeiro!", "error"); return; }
+  document.getElementById('nomeModal').classList.remove('hidden');
+}
+function emitirCertificado() {
+  const n = document.getElementById('inputNomeCertificado').value.trim();
+  if (!n) { mostrarToast("Digite seu nome!", "error"); return; }
+  document.getElementById('certAlunoNome').textContent = n;
+  document.getElementById('certData').textContent = new Date().toLocaleDateString('pt-BR');
+  document.getElementById('certCodigo').textContent = 'PYR-' + Math.floor(100000 + Math.random()*900000);
+  document.getElementById('certQRCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://pyrtugues.netlify.app`;
+  fecharModal('nomeModal');
+  document.getElementById('certModal').classList.remove('hidden');
+  confetti({particleCount:150, spread:90, origin:{y:0.6}, colors:['#7c3aed','#a78bfa','#10b981']});
+}
+function baixarCertificado() {
+  html2canvas(document.getElementById('certificadoCard'), {scale:2, backgroundColor:'#111111'}).then(c => {
+    const a = document.createElement('a');
+    a.download = 'Certificado-Pyrtugues.png';
+    a.href = c.toDataURL("image/png");
+    a.click();
+  });
+}
+
+let timerNotes = null;
+function salvarAnotacoes() {
+  const ind = document.getElementById('saveStatusIndicator');
+  ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span> Salvando...';
+  clearTimeout(timerNotes);
+  timerNotes = setTimeout(() => {
+    estado.anotacoes[estado.licaoAtual] = document.getElementById('lessonNotes').value;
+    salvarEstado();
+    ind.innerHTML = '<span class="w-2 h-2 rounded-full bg-pyr-400"></span> Salvo';
+  }, 500);
+}
+function exportarProgresso() {
+  const s = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estado));
+  const a = document.createElement('a');
+  a.href = s; a.download = `pyrtugues_backup_${new Date().toISOString().split('T')[0]}.json`; a.click();
+  mostrarToast("Backup exportado!"); fecharMenuConfig();
+}
+function importarProgresso(e) {
+  const r = new FileReader();
+  r.onload = (ev) => {
+    try { const o = JSON.parse(ev.target.result); estado = {...DEFAULT_STATE, ...o}; salvarEstado(); location.reload(); }
+    catch { mostrarToast("Arquivo inválido!", "error"); }
+  };
+  r.readAsText(e.target.files[0]);
+}
+function resetarProgresso() {
+  if (confirm("Apagar TODO o progresso?")) {
+    Object.keys(localStorage).filter(k => k.startsWith('pyrtugues_')).forEach(k => localStorage.removeItem(k));
+    location.reload();
+  }
+}
+function toggleMenuConfig(e) { e.stopPropagation(); document.getElementById('menuConfig').classList.toggle('hidden'); }
+function fecharMenuConfig() { document.getElementById('menuConfig').classList.add('hidden'); }
+function toggleSom() {
+  estado.somAtivo = !estado.somAtivo; salvarEstado();
+  document.getElementById('btnSound').innerHTML = estado.somAtivo ? '<i class="fa-solid fa-volume-high text-pyr-400"></i>' : '<i class="fa-solid fa-volume-xmark text-ink-500"></i>';
+  mostrarToast(estado.somAtivo ? "Som ativado" : "Som desativado");
+}
+function toggleModoFoco() {
+  document.getElementById('mainHeader').classList.toggle('hidden');
+  document.getElementById('sidebar').classList.toggle('hidden');
+  const nav = document.querySelector('nav.md\\:hidden'); if (nav) nav.classList.toggle('hidden');
+  mostrarToast("Modo Foco alternado");
+}
+function mudarFonte(t) {
+  const s = t === 'sm' ? '13px' : t === 'lg' ? '17px' : '14px';
+  document.querySelectorAll('.CodeMirror').forEach(el => el.style.fontSize = s);
+  document.body.style.fontSize = t === 'sm' ? '0.9rem' : t === 'lg' ? '1.1rem' : '1rem';
+  if (editorLicao) editorLicao.refresh();
+  if (editorSandbox) editorSandbox.refresh();
+  fecharMenuConfig();
+}
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); salvarEstado(); mostrarToast("Progresso salvo!"); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    const lv = !document.getElementById('sec-lesson').classList.contains('hidden');
+    if (lv) executarCodigo('lesson');
+    else if (!document.getElementById('sec-pratica').classList.contains('hidden')) executarCodigo('sandbox');
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+  if (e.key === 'Escape') { ['dictModal','certModal','inputModal','nomeModal'].forEach(fecharModal); fecharMenuConfig(); }
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('#menuConfig') && !e.target.closest('button[onclick*="toggleMenuConfig"]')) fecharMenuConfig();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  carregarEstado(); processarStreak(); processarMissoes();
+  editorLicao = CodeMirror.fromTextArea(document.getElementById('lessonCodeEditor'), {
+    mode:'python', theme:'dracula', lineNumbers:true, indentUnit:4, tabSize:4, viewportMargin:Infinity, autoCloseBrackets:true
+  });
+  editorSandbox = CodeMirror.fromTextArea(document.getElementById('sandboxCodeEditor'), {
+    mode:'python', theme:'dracula', lineNumbers:true, indentUnit:4, tabSize:4, viewportMargin:Infinity, autoCloseBrackets:true
+  });
+  editorSandbox.setValue('mostrar("Olá, Sandbox!")\nx = 10\ny = 20\nmostrar(f"Soma: {x mais y}")');
+  renderizarListaLicoes(); renderizarHome(); renderizarHeatmap(); renderizarBadges(); atualizarMissoes(); renderizarHeader();
+  document.getElementById('btnSound').innerHTML = estado.somAtivo ? '<i class="fa-solid fa-volume-high text-pyr-400"></i>' : '<i class="fa-solid fa-volume-xmark text-ink-500"></i>';
+  inicializarPyodide();
+  abrirLicao(estado.licaoAtual || "l1");
+  setInterval(salvarEstado, 30000);
+  window.addEventListener('beforeunload', salvarEstado);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') salvarEstado(); });
+});
+</script>
+</body>
+</html>
