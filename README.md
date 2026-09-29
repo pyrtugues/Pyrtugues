@@ -13,7 +13,7 @@
 <p>
 <a href="https://pyrtugues-apre.pages.dev/">🌐 <strong>Site oficial</strong></a> · 
 <a href="https://pyrtugues-editor.pages.dev/">🧪 <strong>Editor Web</strong></a> · 
-<a href="https://pyrtugues.pages.dev/">🔰 <strong>Editor Web</strong></a> · 
+<a href="https://pyrtugues.pages.dev/">🔰 <strong>Curso</strong></a> · 
 <a href="https://github.com/pyrtugues/Pyrtugues/releases/latest">📦 <strong>Downloads</strong></a> · 
 <a href="https://www.youtube.com/@pyrtugues">▶️ <strong>YouTube</strong></a>
 </p>
