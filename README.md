@@ -22,7 +22,7 @@
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/base-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Base Python"></a>
 <a href="https://github.com/pyrtugues/Pyrtugues/releases/latest"><img src="https://img.shields.io/badge/Desktop-Windows%20%7C%20Linux-111827?style=for-the-badge&logo=linux&logoColor=white" alt="Desktop Windows Linux"></a>
 <a href="https://www.pygame.org/"><img src="https://img.shields.io/badge/Pygame-Suportado-10B981?style=for-the-badge" alt="Pygame Suportado"></a>
-<a href="https://pyrtugues-editor.netlify.app/"><img src="https://img.shields.io/badge/editor-Web-111827?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Editor Web"></a>
+<a href="https://pyrtugues-editor.pages.dev"><img src="https://img.shields.io/badge/editor-Web-111827?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Editor Web"></a>
 <a href="https://github.com/pyrtugues/Pyrtugues"><img src="https://img.shields.io/badge/GitHub-Pyrtugues-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pyrtugues"></a>
 </p>
 
