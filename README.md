@@ -2,313 +2,613 @@
 
 <img src="./assets/logo-pyrtugues.png" alt="Logo do Pyrtugues — programação em português baseada em Python" width="160">
 
-<h1>Pyrtugues</h1>
+# Pyrtugues
 
-<h3>Python em português, feito para aprender programação.</h3>
+### Python em português, feito para aprender programação.
 
-<p><strong>Programação em português • lógica de Python • aprendizado progressivo</strong></p>
+**Programação em português • lógica de Python • aprendizado progressivo**
 
-<p>Uma ferramenta educacional criada para facilitar o primeiro contato com programação, usando uma sintaxe em português e mantendo a lógica do Python como base.</p>
+Uma linguagem educacional baseada na lógica do Python, criada para facilitar o aprendizado de programação usando comandos e estruturas em português.
 
-<p>
-<a href="https://pyrtugues-apre.pages.dev/">🌐 <strong>Site oficial</strong></a> · 
-<a href="https://pyrtugues-editor.pages.dev/">🧪 <strong>Editor Web</strong></a> · 
-<a href="https://pyrtugues.pages.dev/">🔰 <strong>Curso</strong></a> · 
-<a href="https://github.com/pyrtugues/Pyrtugues/releases/latest">📦 <strong>Downloads</strong></a> · 
-<a href="https://www.youtube.com/@pyrtugues">▶️ <strong>YouTube</strong></a>
-</p>
-
-<p>
-<a href="https://github.com/pyrtugues/Pyrtugues/releases"><img src="https://img.shields.io/badge/vers%C3%A3o-1.4.0-10B981?style=for-the-badge" alt="Versão"></a>
-<a href="https://www.python.org/"><img src="https://img.shields.io/badge/base-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Base Python"></a>
-<a href="https://github.com/pyrtugues/Pyrtugues/releases/latest"><img src="https://img.shields.io/badge/Desktop-Windows%20%7C%20Linux-111827?style=for-the-badge&logo=linux&logoColor=white" alt="Desktop Windows Linux"></a>
-<a href="https://www.pygame.org/"><img src="https://img.shields.io/badge/Pygame-Suportado-10B981?style=for-the-badge" alt="Pygame Suportado"></a>
-<a href="https://pyrtugues-editor.pages.dev"><img src="https://img.shields.io/badge/editor-Web-111827?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Editor Web"></a>
-<a href="https://github.com/pyrtugues/Pyrtugues"><img src="https://img.shields.io/badge/GitHub-Pyrtugues-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Pyrtugues"></a>
-</p>
+**Versão 1.5.0**
 
 </div>
 
-<hr>
+---
 
-> ⚠️ **Este é o repositório oficial do Pyrtugues.** 
-> Links antigos, forks ou contas anteriores podem estar desatualizados.
+## 📚 O que é o Pyrtugues?
 
-<hr>
+**Pyrtugues** é uma linguagem de programação educacional baseada na sintaxe e na lógica do Python.
 
-<h2>📚 O que é o Pyrtugues?</h2>
+A proposta é permitir que iniciantes aprendam programação utilizando palavras em português, sem abandonar os conceitos fundamentais presentes no Python.
 
-**Pyrtugues** é um projeto educacional de **programação em português** criado para facilitar o primeiro contato com **lógica de programação e Python**.
+O Pyrtugues funciona como uma ponte:
 
-A ideia é reduzir a barreira inicial causada pelos comandos em inglês sem trocar programação textual por blocos. O estudante aprende variáveis, condições, repetições, funções e expressões usando uma sintaxe em português e, ao mesmo tempo, consegue enxergar a relação com o Python tradicional.
+```text
+Pyrtugues
+    ↓
+Motor de tradução
+    ↓
+Python
+    ↓
+Execução
+```
 
-O Pyrtugues funciona como uma **ponte para o Python**: o código em Pyrtugues é processado por um motor de tradução para uma sintaxe correspondente em Python antes da execução.
+Isso significa que o estudante pode aprender conceitos como:
+
+* variáveis;
+* tipos de dados;
+* condições;
+* repetições;
+* funções;
+* classes;
+* exceções;
+* módulos;
+* arquivos;
+* estruturas de dados;
+* testes;
+* programação gráfica;
+* Pygame;
+
+usando uma sintaxe em português e, ao mesmo tempo, entendendo como esses conceitos aparecem no Python.
 
 > **Programar em português → entender a lógica → enxergar o Python → aprender Python.**
 
-<hr>
+---
 
-<h2>🚀 Comece agora</h2>
+# 🚀 Começando
 
-<h3>🧪 Teste no navegador</h3>
+O Pyrtugues possui diferentes formas de utilização:
 
-**[Abrir o Editor Web do Pyrtugues](https://pyrtugues-editor.netlify.app/)**
+* 🖥️ aplicação Desktop;
+* 🪟 Windows;
+* 🐧 Linux;
+* 🌐 Editor Web;
+* 🎮 suporte a Pygame;
+* 📚 exemplos educacionais;
+* 🧪 materiais e exercícios de programação.
 
-Você pode experimentar o Pyrtugues diretamente no navegador usando a versão Web do projeto.
-
-A versão Web permite escrever, traduzir e executar código Pyrtugues diretamente no navegador, sem a necessidade de instalar o ambiente Desktop.
-
-<h3>🖥️ Baixe para Windows</h3>
-
-**[Baixar a versão mais recente](https://github.com/pyrtugues/Pyrtugues/releases/latest)**
-
-A versão Desktop reúne editor, tradução e execução em uma aplicação gráfica desenvolvida com **Python e CustomTkinter**.
-
-<h3>🐧 Use no Linux</h3>
-
-O Pyrtugues também possui uma versão para **Linux**, permitindo utilizar o ambiente Desktop em sistemas Linux compatíveis.
-
-**[Baixar a versão mais recente](https://github.com/pyrtugues/Pyrtugues/releases/latest)**
-
-<h3>🌐 Conheça o projeto</h3>
-
-**[Visitar o site oficial](https://pyrtugues.netlify.app/)**
-
-<hr>
-
-<h2>💡 Pyrtugues → Python</h2>
-
-A proposta pode ser entendida com um exemplo simples.
-
-<h3>Pyrtugues</h3>
-
-```pyrtugues
-idade = 12
-
-se idade maior que 10:
-    mostrar("Olá! Você pode programar!")
-```
-
-<h3>Python equivalente</h3>
-
-```python
-idade = 12
-
-if idade > 10:
-    print("Olá! Você pode programar!")
-```
-
-A sintaxe muda, mas a lógica de programação continua reconhecível.
-
-O objetivo é permitir que o estudante aprenda os conceitos de programação em português e, aos poucos, consiga reconhecer a relação entre Pyrtugues e Python.
-
-<hr>
-
-<h2>🧠 Como funciona?</h2>
+O código principal da aplicação Desktop está em:
 
 ```text
-┌─────────────────────────────┐
-│       Código Pyrtugues      │
-│                             │
-│  se idade maior que 10:     │
-│      mostrar("Olá!")        │
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│      Motor de tradução      │
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│       Código em Python      │
-│                             │
-│  if idade > 10:             │
-│      print("Olá!")          │
-└──────────────┬──────────────┘
-               │
-               ▼
-           EXECUÇÃO
+Pyrtugues_code.py
 ```
 
-Na versão Desktop, o código Pyrtugues é traduzido para Python e executado no ambiente local.
+---
 
-Na versão Web, a arquitetura utiliza **Pyrtugues → tradutor → Python → Pyodide → execução no navegador**.
+# 💡 Primeiro programa
 
-<hr>
-
-<h2>✨ Recursos</h2>
-
-| Recurso | Descrição |
-|---|---|
-| 🇧🇷 Sintaxe em português | Estruturas e comandos em português para o primeiro contato com programação |
-| 🐍 Base Python | Conceitos e organização próximos da lógica do Python |
-| 🔄 Pyrtugues → Python | Permite visualizar a relação entre as duas sintaxes |
-| 🖥️ Desktop | Aplicação gráfica para execução local |
-| 🪟 Windows | Versão Desktop para Windows |
-| 🐧 Linux | Versão Desktop para Linux |
-| 🎨 CustomTkinter | Interface gráfica moderna para a aplicação Desktop |
-| 🎮 Pygame | Suporte para criação de jogos e aplicações gráficas |
-| 🌐 Editor Web | Experiência de programação diretamente no navegador |
-| 📚 Exemplos | Programas para estudar e experimentar |
-| ⌨️ Editor de código | Recursos de edição voltados para escrever e testar programas |
-| 📋 Código Python | Visualização do Python gerado pelo tradutor |
-| 🧪 Projeto em evolução | Novas correções, recursos e exemplos podem chegar em versões futuras |
-
-<hr>
-
-<h2>🎮 Pygame</h2>
-
-O Pyrtugues possui suporte ao **Pygame**, permitindo utilizar recursos da biblioteca para criar **jogos e aplicações gráficas**.
-
-A integração permite que o estudante avance dos primeiros exercícios de programação para projetos mais interativos, utilizando conceitos como:
-
-- janelas;
-- eventos;
-- teclado;
-- mouse;
-- imagens;
-- textos;
-- formas;
-- cores;
-- sprites;
-- colisões;
-- sons;
-- músicas;
-- animações;
-- controle de tempo.
-
-A utilização do Pygame pode variar de acordo com a versão do Pyrtugues e com os recursos disponíveis no tradutor.
-
-<hr>
-
-<h2>🔤 Pyrtugues ↔ Python</h2>
-
-O vocabulário do projeto continua em desenvolvimento. Alguns exemplos de correspondência são:
-
-| Pyrtugues | Python |
-|---|---|
-| `mostrar()` | `print()` |
-| `pergunte()` | `input()` |
-| `se` | `if` |
-| `senão` | `else` |
-| `senão se` | `elif` |
-| `enquanto` | `while` |
-| `para` | `for` |
-| `em` | `in` |
-| `função` | `def` |
-| `retornar` | `return` |
-| `importar` | `import` |
-| `tentar` | `try` |
-| `excepto` | `except` |
-| `inteiro()` | `int()` |
-| `decimal()` | `float()` |
-| `texto()` | `str()` |
-| `lista()` | `list()` |
-| `dicionário()` | `dict()` |
-| `tupla()` | `tuple()` |
-| `conjunto()` | `set()` |
-| `intervalo()` | `range()` |
-| `tamanho()` | `len()` |
-| `verdadeiro` | `True` |
-| `falso` | `False` |
-| `nulo` | `None` |
-
-O conjunto de comandos e a compatibilidade podem mudar conforme o desenvolvimento. Consulte o código e os exemplos da versão utilizada.
-
-<hr>
-
-<h2>🧪 Exemplos práticos</h2>
-
-<h3>👋 Olá, mundo</h3>
+No Pyrtugues:
 
 ```pyrtugues
 mostrar("Olá, mundo!")
 ```
 
-<h3>📦 Variáveis</h3>
+O equivalente em Python é:
 
-```pyrtugues
-nome = "Vinicius"
-idade = 12
-
-mostrar(f"Meu nome é {nome} e tenho {idade} anos.")
+```python
+print("Olá, mundo!")
 ```
 
-<h3>🔀 Condição</h3>
+A ideia não é criar uma linguagem completamente diferente do Python, mas aproximar a linguagem de quem está começando a programar em português.
+
+---
+
+# 🔤 Pyrtugues → Python
+
+Algumas das principais correspondências da linguagem:
+
+| Pyrtugues      | Python        |
+| -------------- | ------------- |
+| `se`           | `if`          |
+| `senão`        | `else`        |
+| `senão_se`     | `elif`        |
+| `para`         | `for`         |
+| `enquanto`     | `while`       |
+| `quebrar`      | `break`       |
+| `continuar`    | `continue`    |
+| `passar`       | `pass`        |
+| `função`       | `def`         |
+| `classe`       | `class`       |
+| `retornar`     | `return`      |
+| `produzir`     | `yield`       |
+| `assíncrono`   | `async`       |
+| `aguardar`     | `await`       |
+| `importar`     | `import`      |
+| `de`           | `from`        |
+| `como`         | `as`          |
+| `tentar`       | `try`         |
+| `exceto`       | `except`      |
+| `finalmente`   | `finally`     |
+| `levantar`     | `raise`       |
+| `afirmar`      | `assert`      |
+| `e`            | `and`         |
+| `ou`           | `or`          |
+| `não`          | `not`         |
+| `é`            | `is`          |
+| `em`           | `in`          |
+| `verdadeiro`   | `True`        |
+| `falso`        | `False`       |
+| `nulo`         | `None`        |
+| `mostrar()`    | `print()`     |
+| `entrada()`    | `input()`     |
+| `inteiro()`    | `int()`       |
+| `decimal()`    | `float()`     |
+| `texto()`      | `str()`       |
+| `lista()`      | `list()`      |
+| `tupla()`      | `tuple()`     |
+| `conjunto()`   | `set()`       |
+| `dicionário()` | `dict()`      |
+| `intervalo()`  | `range()`     |
+| `tamanho()`    | `len()`       |
+| `ordenar()`    | `sorted()`    |
+| `inverter()`   | `reversed()`  |
+| `filtrar()`    | `filter()`    |
+| `mapear()`     | `map()`       |
+| `enumerar()`   | `enumerate()` |
+| `todos()`      | `all()`       |
+| `algum()`      | `any()`       |
+| `absoluto()`   | `abs()`       |
+| `arredondar()` | `round()`     |
+| `somar()`      | `sum()`       |
+| `máximo()`     | `max()`       |
+| `mínimo()`     | `min()`       |
+| `potência()`   | `pow()`       |
+
+O vocabulário da linguagem continua evoluindo conforme o desenvolvimento do projeto.
+
+---
+
+# 🧱 Fundamentos
+
+## Variáveis
 
 ```pyrtugues
-idade = 12
+nome = "Ana"
+idade = 15
+altura = 1.65
+
+mostrar(nome)
+mostrar(idade)
+mostrar(altura)
+```
+
+O Pyrtugues mantém a mesma ideia de atribuição utilizada pelo Python.
+
+---
+
+## Comentários
+
+Comentários continuam utilizando `#`:
+
+```pyrtugues
+# Esta linha não será executada
+mostrar("Código executável")
+```
+
+---
+
+## Condições
+
+```pyrtugues
+idade = 15
 
 se idade maior que 10:
-    mostrar("Você passou da primeira etapa!")
+    mostrar("Pode continuar")
 senão:
-    mostrar("Continue estudando!")
+    mostrar("Precisa estudar mais")
 ```
 
-<h3>🔁 Repetição</h3>
+Também é possível utilizar múltiplos caminhos:
+
+```pyrtugues
+nota = 8
+
+se nota maior ou igual a 9:
+    mostrar("Excelente")
+senão_se nota maior ou igual a 7:
+    mostrar("Bom")
+senão_se nota maior ou igual a 5:
+    mostrar("Recuperação")
+senão:
+    mostrar("Reprovado")
+```
+
+---
+
+# 🔁 Repetições
+
+## `para`
 
 ```pyrtugues
 para numero em intervalo(1, 6):
     mostrar(numero)
 ```
 
-<h3>🧩 Função</h3>
+Equivalente:
+
+```python
+for numero in range(1, 6):
+    print(numero)
+```
+
+---
+
+## `enquanto`
+
+```pyrtugues
+contador = 0
+
+enquanto contador menor que 5:
+    mostrar(contador)
+    contador += 1
+```
+
+---
+
+## Controle de loops
+
+### `quebrar`
+
+```pyrtugues
+para numero em intervalo(1, 10):
+    se numero igual a 5:
+        quebrar
+
+    mostrar(numero)
+```
+
+### `continuar`
+
+```pyrtugues
+para numero em intervalo(1, 8):
+    se numero igual a 4:
+        continuar
+
+    mostrar(numero)
+```
+
+### `passar`
+
+```pyrtugues
+função futura():
+    passar
+```
+
+---
+
+# 🧩 Funções
+
+Funções podem ser declaradas utilizando `função`:
 
 ```pyrtugues
 função saudacao(nome):
     retornar f"Olá, {nome}!"
 
-mostrar(saudacao("Pyrtugues"))
+mensagem = saudacao("Pyrtugues")
+mostrar(mensagem)
 ```
 
-<h3>🧮 Calculadora</h3>
+Outro exemplo:
 
 ```pyrtugues
-n1 = decimal(pergunte("Primeiro número: "))
-op = pergunte("Operação (+, -, *, /): ")
-n2 = decimal(pergunte("Segundo número: "))
+função calcular_media(nota1, nota2):
+    retornar (nota1 + nota2) / 2
 
-se op == "+":
-    mostrar(n1 + n2)
-senão se op == "-":
-    mostrar(n1 - n2)
-senão se op == "*":
-    mostrar(n1 * n2)
-senão:
-    mostrar(n1 / n2)
+media = calcular_media(8, 10)
+
+mostrar(media)
 ```
 
-Os exemplos mostram a proposta sintática. A compatibilidade exata de cada recurso depende da versão atual do motor de tradução.
+---
 
-<hr>
+# 📥 Entrada de dados
 
-<h2>🖥️ Versão Desktop</h2>
+Programas interativos podem solicitar dados:
 
-A versão Desktop foi desenvolvida com **Python + CustomTkinter** e reúne a edição e execução do Pyrtugues em uma interface gráfica.
+```pyrtugues
+nome = pergunte("Qual é o seu nome? ")
 
-A aplicação foi pensada para tornar a experiência mais simples para quem está aprendendo, permitindo escrever o código, executar programas e acompanhar os resultados.
-
-<h3>Plataformas</h3>
-
-- 🪟 **Windows**
-- 🐧 **Linux**
-
-📦 **[Baixar a versão mais recente](https://github.com/pyrtugues/Pyrtugues/releases/latest)**
-
-O código principal da aplicação está no arquivo:
-
-```text
-Pyrtugues_code.py
+mostrar(f"Olá, {nome}!")
 ```
 
-<hr>
+Conversões podem ser feitas utilizando os tipos traduzidos:
 
-<h2>🎮 Pygame no Desktop</h2>
+```pyrtugues
+idade = inteiro(pergunte("Idade: "))
+altura = decimal(pergunte("Altura: "))
 
-A versão Desktop permite utilizar o Pyrtugues em projetos que utilizam **Pygame**, possibilitando criar aplicações gráficas e jogos.
+mostrar(idade)
+mostrar(altura)
+```
 
-Isso permite trabalhar com conceitos como:
+---
+
+# 🧮 Operações
+
+O Pyrtugues mantém os operadores matemáticos tradicionais do Python:
+
+```pyrtugues
+a = 10
+b = 3
+
+mostrar(a + b)
+mostrar(a - b)
+mostrar(a * b)
+mostrar(a / b)
+mostrar(a // b)
+mostrar(a % b)
+mostrar(a ** b)
+```
+
+Também existem formas traduzidas para operadores compostos:
+
+```pyrtugues
+contador = 0
+
+contador += 1
+contador -= 1
+contador *= 2
+contador /= 2
+```
+
+---
+
+# 📦 Listas
+
+```pyrtugues
+nomes = ["Ana", "Bia", "Carlos"]
+
+mostrar(nomes)
+mostrar(nomes[0])
+```
+
+Percorrendo uma lista:
+
+```pyrtugues
+nomes = ["Ana", "Bia", "Carlos"]
+
+para nome em nomes:
+    mostrar(nome)
+```
+
+---
+
+# 🔷 Tuplas
+
+```pyrtugues
+coordenadas = (10, 20)
+
+mostrar(coordenadas)
+mostrar(coordenadas[0])
+```
+
+Tuplas são úteis quando os valores representam uma coleção que não deve ser modificada.
+
+---
+
+# 🔹 Conjuntos
+
+```pyrtugues
+numeros = {1, 2, 3, 3, 4}
+
+mostrar(numeros)
+```
+
+Conjuntos eliminam valores duplicados.
+
+---
+
+# 📖 Dicionários
+
+```pyrtugues
+aluno = {
+    "nome": "Ana",
+    "idade": 15,
+    "nota": 9
+}
+
+mostrar(aluno["nome"])
+mostrar(aluno["nota"])
+```
+
+Dicionários permitem representar informações estruturadas por chave e valor.
+
+---
+
+# 🧵 Textos
+
+Strings podem ser utilizadas normalmente:
+
+```pyrtugues
+texto = "PYRTUGUES"
+
+mostrar(texto[0])
+mostrar(texto[-1])
+```
+
+Também podem ser usadas f-strings:
+
+```pyrtugues
+nome = "Ana"
+idade = 15
+
+mostrar(f"Nome: {nome}")
+mostrar(f"Idade: {idade}")
+```
+
+---
+
+# ⚠️ Exceções
+
+O Pyrtugues possui estruturas para tratamento de erros.
+
+```pyrtugues
+tentar:
+    numero = inteiro(pergunte("Número: "))
+    mostrar(numero * 2)
+
+exceto ValueError:
+    mostrar("Valor inválido")
+
+finalmente:
+    mostrar("Fim da tentativa")
+```
+
+Também é possível gerar exceções:
+
+```pyrtugues
+função dividir(a, b):
+    se b == 0:
+        levantar ValueError("Divisor não pode ser zero")
+
+    retornar a / b
+```
+
+E realizar verificações:
+
+```pyrtugues
+função quadrado(numero):
+    retornar numero * numero
+
+afirmar quadrado(4) == 16
+afirmar quadrado(-2) == 4
+```
+
+---
+
+# 📚 Módulos
+
+O Pyrtugues pode utilizar módulos da biblioteca padrão do Python.
+
+```pyrtugues
+importar matemática
+
+mostrar(matématica.sqrt(81))
+```
+
+Também é possível utilizar `de` e `como`:
+
+```pyrtugues
+de matemática importar sqrt como raiz
+
+mostrar(raiz(81))
+```
+
+> Os nomes exatos disponíveis dependem do dicionário e da versão do tradutor.
+
+---
+
+# 🎲 Biblioteca padrão
+
+Exemplos de módulos utilizados nos materiais do projeto:
+
+* `math`;
+* `random`;
+* `datetime`;
+* `time`;
+* `os`;
+* `sys`;
+* `re`;
+* `json`;
+* `csv`;
+* `collections`;
+* `calendar`;
+* `unittest`;
+* entre outros recursos da biblioteca padrão compatíveis com o tradutor.
+
+Exemplo:
+
+```pyrtugues
+importar aleatório
+importar datetime
+
+numero = aleatório.randint(1, 10)
+agora = datetime.datetime.now()
+
+mostrar(numero)
+mostrar(agora)
+```
+
+---
+
+# 💾 JSON
+
+O Pyrtugues pode trabalhar com dados JSON utilizando o módulo `json`.
+
+Exemplo:
+
+```pyrtugues
+importar json
+
+dados = {
+    "nome": "Ana",
+    "nota": 9
+}
+
+com abrir("aluno.json", "w", encoding="utf-8") como arquivo:
+    json.dump(dados, arquivo, ensure_ascii=False, indent=2)
+```
+
+Leitura:
+
+```pyrtugues
+com abrir("aluno.json", "r", encoding="utf-8") como arquivo:
+    recuperado = json.load(arquivo)
+
+mostrar(recuperado)
+```
+
+---
+
+# 📊 CSV
+
+Também é possível trabalhar com arquivos CSV:
+
+```pyrtugues
+importar csv
+
+com abrir("alunos.csv", "w", newline="", encoding="utf-8") como arquivo:
+    gravador = csv.writer(arquivo)
+
+    gravador.writerow(["nome", "nota"])
+    gravador.writerow(["Ana", 9])
+```
+
+---
+
+# 🧪 Testes
+
+O Pyrtugues possui suporte a conceitos de testes automatizados.
+
+Exemplo:
+
+```pyrtugues
+função somar(a, b):
+    retornar a + b
+
+afirmar somar(2, 2) == 4
+afirmar somar(10, 5) == 15
+```
+
+Também podem ser utilizados recursos do `unittest` quando compatíveis com o ambiente:
+
+```pyrtugues
+importar testes_unitários
+
+classe TesteSoma(testes_unitários.TestCase):
+
+    função teste_soma(self):
+        self.assertEqual(2 + 2, 4)
+```
+
+---
+
+# 🎮 Pygame
+
+O Pyrtugues possui integração com **Pygame**, permitindo utilizar conceitos de programação gráfica e desenvolvimento de jogos.
+
+A arquitetura pode ser entendida como:
 
 ```text
 Pyrtugues
@@ -319,287 +619,516 @@ Python
     ↓
 Pygame
     ↓
-Jogo / Aplicação gráfica
+Jogo / Aplicação
 ```
 
-O suporte depende dos comandos e recursos implementados na versão atual do Pyrtugues.
+Entre os conceitos que podem ser explorados estão:
 
-<hr>
+* janelas;
+* eventos;
+* teclado;
+* mouse;
+* imagens;
+* textos;
+* formas;
+* cores;
+* sprites;
+* colisões;
+* sons;
+* músicas;
+* animações;
+* controle de tempo.
 
-<h2>🐧 Versão Linux</h2>
+Um exemplo conceitual:
 
-O Pyrtugues possui uma nova versão Desktop destinada ao **Linux**.
+```pyrtugues
+importar pygame
 
-A versão Linux permite executar o ambiente gráfico do Pyrtugues localmente, utilizando Python e as dependências necessárias do projeto.
+pygame.init()
 
-Para usuários que preferem executar pelo código-fonte, consulte os arquivos do repositório e instale as dependências utilizadas pela aplicação.
+janela = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Meu primeiro projeto")
 
-Exemplo:
+executando = verdadeiro
 
-```bash
-git clone https://github.com/pyrtugues/Pyrtugues.git
-cd Pyrtugues
+enquanto executando:
+
+    para evento em pygame.event.get():
+
+        se evento.type == pygame.QUIT:
+            executando = falso
+
+    janela.fill((30, 30, 30))
+
+    pygame.display.flip()
+
+pygame.quit()
 ```
 
-Depois, instale as dependências necessárias para a versão utilizada e execute o programa principal.
+> A disponibilidade de determinados recursos do Pygame depende da versão do tradutor e do ambiente em que o Pyrtugues está sendo executado.
 
-Os procedimentos de instalação podem variar de acordo com a distribuição Linux.
+---
 
-<hr>
+# 🖥️ Desktop
 
-<h2>🌐 Editor Web — Pyrtugues Online</h2>
+A versão Desktop utiliza:
 
-O projeto possui um editor para experimentar **programação em português baseada em Python** diretamente no navegador.
+* Python;
+* CustomTkinter;
+* Tkinter;
+* Pygame.
 
-👉 **https://pyrtugues-editor.netlify.app/**
+O aplicativo reúne recursos como:
 
-A versão Web utiliza tecnologias de navegador e **Pyodide** para executar Python no ambiente do browser.
+* editor de código;
+* execução do programa;
+* terminal de saída;
+* entrada interativa;
+* visualização do Python gerado;
+* exemplos;
+* navegação;
+* destaque da linha atual;
+* interrupção da execução;
+* carregamento de exemplos;
+* interface gráfica.
 
-Entre os recursos disponíveis na versão Web estão:
-
-- editor de código;
-- tradução Pyrtugues → Python;
-- execução no navegador;
-- entrada interativa;
-- exemplos;
-- saída no terminal;
-- visualização do Python gerado;
-- cópia do código Python;
-- download do código Python;
-- execução do motor em Web Worker.
-
-<hr>
-
-<h2>🌐 Site oficial</h2>
-
-O site reúne a apresentação do projeto, informações sobre o Pyrtugues e links para as versões disponíveis.
-
-👉 **https://pyrtugues.netlify.app/**
-
-<hr>
-
-<h2>📂 Estrutura do repositório</h2>
-
-```text
-Pyrtugues/
-├── assets/
-│   └── logo-pyrtugues.png
-├── LICENSE
-├── README.md
-├── Pyrtugues_code.py
-├── index.html
-├── Pyrtugues_Documentacao
-└── ...
-```
-
-| Arquivo / pasta | Função |
-|---|---|
-| `assets/` | Recursos visuais do projeto |
-| `LICENSE` | Termos de uso e distribuição |
-| `README.md` | Documentação principal |
-| `Pyrtugues_code.py` | Código principal da versão Desktop |
-| `index.html` | Parte Web do projeto |
-| `Pyrtugues_Documentacao` | Documentação do projeto |
-
-<hr>
-
-<h2>🛠️ Tecnologias</h2>
-
-<h3>Desktop</h3>
-
-- Python
-- CustomTkinter
-- Tkinter
-- Pygame
-
-<h3>Web</h3>
-
-- HTML
-- CSS
-- JavaScript
-- Tailwind CSS
-- Pyodide
-- Web Worker
-
-<hr>
-
-<h2>🚀 Começando pelo código-fonte</h2>
-
-Clone o repositório:
-
-```bash
-git clone https://github.com/pyrtugues/Pyrtugues.git
-```
-
-Entre na pasta:
-
-```bash
-cd Pyrtugues
-```
-
-Depois, consulte os arquivos da parte Desktop ou Web que deseja estudar.
-
-Para a versão Desktop, instale as dependências necessárias e execute o arquivo principal:
+O arquivo principal é:
 
 ```text
 Pyrtugues_code.py
 ```
 
-O procedimento pode variar conforme o sistema operacional e a versão utilizada.
+---
 
-<hr>
+# 🧠 Execução do código
 
-<h2>❓ Perguntas frequentes</h2>
+No Desktop, o fluxo principal é:
 
-<h3>O Pyrtugues é Python?</h3>
+```text
+Código Pyrtugues
+       ↓
+    tradução
+       ↓
+Código Python
+       ↓
+exec(...)
+       ↓
+resultado
+```
 
-Não. O Pyrtugues é uma proposta de sintaxe em português baseada na lógica do Python, com um motor de tradução para Python.
+O aplicativo também possui mecanismos para executar o código em uma thread separada, permitindo manter a interface responsiva durante a execução.
 
-<h3>O Pyrtugues substitui o Python?</h3>
+A entrada e a saída são integradas à interface gráfica do aplicativo.
 
-Não. O objetivo é funcionar como uma ponte para o aprendizado de Python.
+---
 
-<h3>Preciso saber inglês para começar?</h3>
+# 🌐 Editor Web
 
-A proposta do Pyrtugues é reduzir a barreira inicial dos comandos em inglês para quem está começando.
+O projeto também possui uma experiência Web para experimentar Pyrtugues diretamente no navegador.
 
-<h3>Posso criar jogos com Pyrtugues?</h3>
+A versão Web possui recursos como:
 
-Sim. O projeto possui suporte ao Pygame, permitindo trabalhar com jogos e aplicações gráficas.
+* editor;
+* tradução Pyrtugues → Python;
+* execução;
+* entrada interativa;
+* terminal;
+* exemplos;
+* visualização do Python gerado;
+* cópia do código Python;
+* download do código Python;
+* execução do motor em Web Worker.
 
-<h3>O Pyrtugues funciona no Linux?</h3>
+A arquitetura Web utiliza:
 
-Sim. O projeto possui uma versão Desktop para Linux.
+```text
+Pyrtugues
+    ↓
+Tradutor
+    ↓
+Python
+    ↓
+Pyodide
+    ↓
+Navegador
+```
 
-<h3>O Pyrtugues funciona no Windows?</h3>
+---
 
-Sim. O projeto possui uma versão Desktop para Windows.
+# 📂 Estrutura do projeto
 
-<h3>Onde posso testar?</h3>
+A estrutura principal do repositório inclui:
 
-No [Editor Web do Pyrtugues](https://pyrtugues-editor.netlify.app/).
+```text
+Pyrtugues/
+├── assets/
+│   └── logo-pyrtugues.png
+├── Pyrtugues_Documentacao/
+├── site-principal/
+├── LICENSE
+├── README.md
+└── Pyrtugues_code.py
+```
 
-<h3>O Pyrtugues está pronto?</h3>
+| Arquivo / pasta           | Função                        |
+| ------------------------- | ----------------------------- |
+| `assets/`                 | Recursos visuais              |
+| `Pyrtugues_Documentacao/` | Documentação do projeto       |
+| `site-principal/`         | Arquivos relacionados ao site |
+| `Pyrtugues_code.py`       | Aplicação Desktop             |
+| `README.md`               | Documentação principal        |
+| `LICENSE`                 | Licença do projeto            |
 
-O projeto continua em desenvolvimento e pode receber novos recursos, correções e mudanças de compatibilidade.
+---
 
-<hr>
+# 🛠️ Tecnologias
 
-<h2>🔎 Pyrtugues na internet</h2>
+## Desktop
 
-Para facilitar a identificação do projeto, os canais oficiais usam o mesmo nome e identidade:
+* Python
+* CustomTkinter
+* Tkinter
+* Pygame
 
-| Canal | Endereço |
-|---|---|
-| 🌐 Site | [pyrtugues.netlify.app](https://pyrtugues.netlify.app/) |
-| 🧪 Editor Web | [pyrtugues-editor.netlify.app](https://pyrtugues-editor.netlify.app/) |
-| 💻 GitHub | [github.com/pyrtugues/Pyrtugues](https://github.com/pyrtugues/Pyrtugues) |
-| 👤 Perfil | [github.com/pyrtugues](https://github.com/pyrtugues) |
-| 📦 Releases | [Versão mais recente](https://github.com/pyrtugues/Pyrtugues/releases/latest) |
-| ▶️ YouTube | [@pyrtugues](https://www.youtube.com/@pyrtugues) |
+## Web
 
-<hr>
+* HTML
+* CSS
+* JavaScript
+* Tailwind CSS
+* Pyodide
+* Web Worker
 
-<h2>🌱 Estado do projeto</h2>
+---
 
-**Versão atual: 1.3.0**
+# 🚀 Executando pelo código-fonte
 
-O Pyrtugues continua em desenvolvimento. Entre as áreas que podem evoluir estão:
+Clone o projeto:
 
-- novos comandos;
-- melhorias no tradutor;
-- suporte a novos recursos do Python;
-- expansão do suporte ao Pygame;
-- tratamento de erros;
-- novos exemplos e exercícios;
-- documentação;
-- melhorias no Desktop;
-- melhorias no Linux;
-- melhorias no Windows;
-- melhorias no Editor Web;
-- materiais educacionais;
-- novas plataformas.
+```bash
+git clone https://github.com/pyrtugues/Pyrtugues.git
+```
 
-<hr>
+Entre no diretório:
 
-<h2>🤝 Contribuições</h2>
+```bash
+cd Pyrtugues
+```
 
-Sugestões, testes e contribuições podem ajudar o projeto a evoluir.
+A aplicação Desktop está em:
 
-Você pode contribuir com:
+```text
+Pyrtugues_code.py
+```
 
-- 🧪 testes;
-- 🐛 identificação de bugs;
-- 💡 sugestões de comandos;
-- 🎮 exemplos com Pygame;
-- 🐧 testes no Linux;
-- 🪟 testes no Windows;
-- 📖 documentação;
-- 🧩 exemplos educacionais;
-- 💻 código.
+As dependências devem ser instaladas de acordo com o ambiente utilizado.
 
-Ao modificar o tradutor, é importante testar alterações que possam afetar nomes de variáveis, strings, comentários, f-strings, expressões e código já suportado.
+Exemplo:
 
-👉 **[Abrir uma Issue](https://github.com/pyrtugues/Pyrtugues/issues)**
+```bash
+pip install customtkinter pygame
+```
 
-<hr>
+Depois:
 
-<h2>📜 Licença</h2>
+```bash
+python Pyrtugues_code.py
+```
 
-O Pyrtugues **não utiliza a licença MIT atualmente**.
+> O conjunto exato de dependências pode mudar conforme a versão do projeto e o sistema operacional.
 
-O projeto possui uma licença própria, com regras específicas para uso pessoal, educacional individual, institucional, comercial, redistribuição e modificações.
+---
 
-Antes de copiar, modificar, distribuir ou utilizar o Pyrtugues, consulte o arquivo [LICENSE](./LICENSE).
+# 📖 Exemplos de projetos
 
-A publicação do código no GitHub não deve ser interpretada como autorização para usos que a licença não permita.
+## Calculadora
 
-<hr>
+```pyrtugues
+função calcular(a, b, operador):
 
-<h2>👨‍💻 Criador</h2>
+    se operador == "+":
+        retornar a + b
+
+    senão se operador == "-":
+        retornar a - b
+
+    senão se operador == "*":
+        retornar a * b
+
+    senão se operador == "/":
+        retornar a / b
+
+    senão:
+        levantar ValueError("Operador inválido")
+
+
+a = decimal(pergunte("Primeiro: "))
+b = decimal(pergunte("Segundo: "))
+operador = pergunte("Operação (+, -, *, /): ")
+
+mostrar(calcular(a, b, operador))
+```
+
+---
+
+## Conversor
+
+```pyrtugues
+função c_para_f(celsius):
+    retornar celsius * 9 / 5 + 32
+
+c = decimal(pergunte("Temperatura em C: "))
+
+mostrar(f"{c} C = {c_para_f(c)} F")
+```
+
+---
+
+## Quiz
+
+```pyrtugues
+perguntas = [
+    ("Qual linguagem está na base do Pyrtugues?", "python"),
+    ("Quanto é 2 + 2?", "4")
+]
+
+pontuacao = 0
+
+para pergunta, resposta_correta em perguntas:
+
+    resposta = pergunte(pergunta + " ")
+
+    se resposta.lower() == resposta_correta:
+        mostrar("Correto!")
+        pontuacao += 1
+
+    senão:
+        mostrar("Resposta incorreta.")
+
+mostrar(f"Pontuação: {pontuacao}/{tamanho(perguntas)}")
+```
+
+---
+
+## Lista de tarefas
+
+```pyrtugues
+tarefas = []
+
+enquanto verdadeiro:
+
+    mostrar("1 - adicionar")
+    mostrar("2 - listar")
+    mostrar("3 - sair")
+
+    opcao = pergunte("Opção: ")
+
+    se opcao == "1":
+
+        tarefa = pergunte("Tarefa: ")
+        tarefas.adicionar(tarefa)
+
+    senão se opcao == "2":
+
+        para tarefa em tarefas:
+            mostrar(tarefa)
+
+    senão:
+
+        quebrar
+
+mostrar("Fim")
+```
+
+---
+
+# 🎓 Pyrtugues como ferramenta educacional
+
+O projeto foi pensado para ensinar programação de maneira progressiva.
+
+O estudante pode começar com:
+
+```pyrtugues
+mostrar("Olá!")
+```
+
+e avançar para:
+
+```text
+variáveis
+   ↓
+condições
+   ↓
+repetições
+   ↓
+funções
+   ↓
+estruturas de dados
+   ↓
+exceções
+   ↓
+módulos
+   ↓
+arquivos
+   ↓
+testes
+   ↓
+Pygame
+   ↓
+projetos
+```
+
+A intenção é que os conhecimentos adquiridos sejam transferíveis para Python.
+
+---
+
+# 🔎 Filosofia do projeto
+
+O Pyrtugues não pretende substituir o Python.
+
+A proposta é diminuir a barreira inicial causada pela sintaxe em inglês e permitir que o estudante concentre sua atenção primeiro na lógica.
+
+Depois, ao visualizar o Python equivalente, o estudante consegue perceber a relação:
+
+```text
+mostrar()       → print()
+se              → if
+senão           → else
+para            → for
+enquanto        → while
+função          → def
+retornar        → return
+```
+
+Dessa forma, o Pyrtugues pode funcionar como uma ponte entre o primeiro contato com programação e o Python.
+
+---
+
+# 📦 Versão
+
+## Pyrtugues 1.5.0
+
+Esta documentação corresponde à versão **1.5.0** do projeto.
+
+O Pyrtugues continua em desenvolvimento e a compatibilidade de determinados recursos pode mudar entre versões.
+
+Para saber exatamente quais comandos estão disponíveis no ambiente utilizado, consulte o código do tradutor e os exemplos correspondentes à versão.
+
+---
+
+# 🤝 Contribuições
+
+Contribuições podem ajudar o projeto a evoluir.
+
+Algumas formas de contribuir:
+
+* 🐛 reportar bugs;
+* 🧪 testar recursos;
+* 💡 sugerir novos comandos;
+* 📖 melhorar a documentação;
+* 🧩 criar exemplos;
+* 🎮 criar projetos com Pygame;
+* 🐧 testar no Linux;
+* 🪟 testar no Windows;
+* 💻 contribuir com código.
+
+Ao alterar o tradutor, é importante testar especialmente:
+
+* variáveis;
+* strings;
+* comentários;
+* f-strings;
+* expressões;
+* nomes que coincidem com palavras reservadas;
+* imports;
+* estruturas condicionais;
+* loops;
+* funções;
+* exceções;
+* código Python já existente.
+
+---
+
+# 📜 Licença
+
+O Pyrtugues possui uma licença própria.
+
+A licença atual estabelece regras específicas para:
+
+* uso pessoal;
+* uso educacional individual;
+* uso institucional;
+* uso comercial;
+* modificações;
+* redistribuição;
+* atribuição;
+* marca e identidade do projeto.
+
+Consulte o arquivo:
+
+```text
+LICENSE
+```
+
+antes de utilizar, modificar ou redistribuir o projeto.
+
+---
+
+# 👨‍💻 Criador
 
 **Vinicius Caracciolo**
 
-O Pyrtugues nasceu como um projeto pessoal voltado para programação e educação, com a ideia de tornar o primeiro contato com código mais acessível para falantes de português.
+O Pyrtugues nasceu como um projeto pessoal voltado para programação e educação.
 
-O projeto começou quando seu criador tinha 12 anos e evoluiu para incluir uma aplicação Desktop, uma versão Web, suporte ao Pygame, suporte ao Linux, documentação, exemplos e uma identidade própria.
+O projeto evoluiu para incluir:
 
-<hr>
+* linguagem de programação em português;
+* tradutor para Python;
+* aplicação Desktop;
+* suporte ao Linux;
+* suporte ao Windows;
+* Pygame;
+* Editor Web;
+* materiais educacionais;
+* documentação;
+* exemplos e projetos.
 
-## 🧒 Pyrtugues para crianças e escolas
-Diferente do Portugol (que é pseudocódigo acadêmico e complicado) e do Logo (limitado a desenhos), o Pyrtugues ensina lógica de Python usando comandos simples em português, sem inglês e sem blocos. Ideal para projetos escolares e para dar o primeiro passo rumo ao Python real.
+---
 
-<hr>
+# 🌱 Estado do projeto
 
-<h2>⭐ Como apoiar o Pyrtugues</h2>
+**Versão atual: 1.5.0**
 
-Você pode ajudar de formas simples:
+O Pyrtugues continua em desenvolvimento.
 
-- ⭐ dar uma estrela no GitHub;
-- 🧪 testar o Editor Web;
-- 🖥️ testar a versão Desktop;
-- 🐧 testar a versão Linux;
-- 🪟 testar a versão Windows;
-- 🎮 criar exemplos com Pygame;
-- 🐛 reportar bugs;
-- 💡 sugerir melhorias;
-- 📖 ajudar com documentação e exemplos;
-- 🔗 compartilhar o projeto.
+Entre as áreas que podem evoluir estão:
 
-👉 **[Dar uma estrela no GitHub](https://github.com/pyrtugues/Pyrtugues/stargazers)**
+* novos comandos;
+* melhorias no tradutor;
+* maior compatibilidade com Python;
+* melhorias no Pygame;
+* tratamento de erros;
+* novos exemplos;
+* documentação;
+* Desktop;
+* Linux;
+* Windows;
+* Editor Web;
+* materiais educacionais;
+* novas plataformas.
 
-<hr>
+---
 
 <div align="center">
 
-💚 **Pyrtugues**
+## 💚 Pyrtugues
 
 **Programação em português.**
+
 **Lógica de Python.**
+
 **Uma ponte para aprender.**
 
-Pyrtugues — Python em português, feito para aprender programação.
-
-🌐 [Site](https://pyrtugues.netlify.app/) · 🧪 [Editor Web](https://pyrtugues-editor.netlify.app/) · 💻 [GitHub](https://github.com/pyrtugues/Pyrtugues) · 📦 [Releases](https://github.com/pyrtugues/Pyrtugues/releases/latest) · ▶️ [YouTube](https://www.youtube.com/@pyrtugues)
+### Pyrtugues — Python em português, feito para aprender programação.
 
 </div>
