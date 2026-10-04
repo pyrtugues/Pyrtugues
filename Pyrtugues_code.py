@@ -8,9 +8,11 @@ from pathlib import Path
 import json
 import keyword
 import builtins
+import os
+import shutil
+import subprocess
+import tempfile
 
-# Pasta onde o aplicativo/arquivos empacotados estão.
-# Isso funciona tanto no .py quanto no executável gerado pelo PyInstaller.
 BASE_DIR = Path(__file__).resolve().parent
 
 def _carregar_dicionario(caminho):
@@ -40,7 +42,7 @@ def _preparar_dicionario(traducao):
 # Os dois dicionários ficam disponíveis no próprio programa. A seleção inicial
 # agora acontece em uma interface gráfica bonita, em vez de pelo console.
 TRADUCAO_EDU = _carregar_dicionario(BASE_DIR / "dicionario.json")
-TRADUCAO_COMPLETO = _carregar_dicionario(BASE_DIR / "dicionario_completo_json")
+TRADUCAO_COMPLETO = _carregar_dicionario(BASE_DIR / "dicionario_completo.json")
 
 # Filtra chaves de seção e evita reprocessar palavras que já são Python.
 # O dicionário COMPLETO possui algumas entradas em inglês/nomes nativos de
@@ -69,6 +71,28 @@ _METODOS = {
     "tirar": "pop", "limpar": "clear", "copiar": "copy", "índice": "index",
     "ordenar em ordem": "sort", "inverter ordem": "reverse",
     "chaves": "keys", "valores": "values", "itens": "items", "pegar": "get", "atualizar": "update",
+    # Métodos comuns em objetos gráficos/widgets.
+    "configurar": "configure", "obter configuração": "cget",
+    "vincular": "bind", "desvincular": "unbind",
+    "empacotar": "pack", "configurar empacotamento": "pack_configure",
+    "esquecer empacotamento": "pack_forget", "propagar empacotamento": "pack_propagate",
+    "grade": "grid", "configurar grade": "grid_configure",
+    "esquecer grade": "grid_forget", "remover grade": "grid_remove",
+    "propagar grade": "grid_propagate", "posicionar": "place",
+    "configurar posição": "place_configure", "esquecer posição": "place_forget",
+    "foco": "focus", "definir foco": "focus_set", "destruir": "destroy",
+    "obter": "get", "definir": "set", "ver": "see",
+    # Métodos de relógio/tempo do Pygame.
+    "marcar_fps": "tick", "marcar_fps_bruto": "tick_busy_loop",
+    "fps_atual": "get_fps", "tempo_quadro": "get_time", "tempo_bruto": "get_rawtime",
+    "esperar_ms": "delay", "esperar": "wait",
+    # Métodos úteis de Surface/Rect/Vector2.
+    "preencher": "fill", "colar": "blit", "converter": "convert",
+    "converter_alpha": "convert_alpha", "obter_retângulo": "get_rect",
+    "obter_tamanho": "get_size", "largura": "get_width", "altura": "get_height",
+    "mover": "move", "mover_em": "move_ip", "prender": "clamp",
+    "colidir_ponto": "collidepoint", "colidir_retângulo": "colliderect",
+    "obter_centro": "center", "obter_x": "x", "obter_y": "y",
 }
 _TIPOS_CONTEXTUAIS = {
     "inteiro",
@@ -91,12 +115,167 @@ _TIPOS_CONTEXTUAIS = {
 _MODULOS = {
     "matemática": "math", "aleatório": "random", "data e hora": "datetime",
     "tempo": "time", "sistema": "os", "expressão regular": "re",
+    # Biblioteca gráfica / jogos
+    "jogo": "pygame", "ctk": "customtkinter",
+    # Bibliotecas populares
+    "numerico": "numpy", "tabelas": "pandas", "grafico": "matplotlib.pyplot",
+    "requisicoes": "requests", "cliente_http": "httpx",
+    "servidor_web": "flask", "api_web": "fastapi",
+    "banco_dados": "sqlalchemy", "planilha": "openpyxl",
+    "imagens_pillow": "PIL.Image", "visao_cv": "cv2",
+    "dados_rapidos": "polars", "grafico_interativo": "plotly.express",
+    "cientifico": "scipy",
 }
 
 _SKIP_DIRETO = {
     "e", "ou", "em", "pergunte", "pergunta", "mais", "menos", "vezes", "resto", "potência", "é",
     *(_METODOS.keys()), *(_MODULOS.keys()), "caminho", "arquivo", "requisição", "resposta",
 }
+
+
+_BIBLIOTECA_ALIASES = {
+    # Pygame — sintaxe natural, mas sem transformar variáveis comuns.
+    "jogo.iniciar": "pygame.init",
+    "jogo.sair": "pygame.quit",
+    "jogo.display.criar_janela": "pygame.display.set_mode",
+    "jogo.display.definir_título": "pygame.display.set_caption",
+    "jogo.display.obter_título": "pygame.display.get_caption",
+    "jogo.display.atualizar_tela": "pygame.display.flip",
+    "jogo.display.atualizar": "pygame.display.update",
+    "jogo.display.obter_tela": "pygame.display.get_surface",
+    "jogo.display.obter_tamanho": "pygame.display.get_window_size",
+    "jogo.display.definir_ícone": "pygame.display.set_icon",
+    "jogo.eventos.obter": "pygame.event.get",
+    "jogo.eventos.pegar": "pygame.event.poll",
+    "jogo.eventos.esperar": "pygame.event.wait",
+    "jogo.eventos.limpar": "pygame.event.clear",
+    "jogo.eventos.criar": "pygame.event.Event",
+    "jogo.desenho.linha": "pygame.draw.line",
+    "jogo.desenho.linhas": "pygame.draw.lines",
+    "jogo.desenho.círculo": "pygame.draw.circle",
+    "jogo.desenho.retângulo": "pygame.draw.rect",
+    "jogo.desenho.elipse": "pygame.draw.ellipse",
+    "jogo.desenho.polígono": "pygame.draw.polygon",
+    "jogo.desenho.arco": "pygame.draw.arc",
+    "jogo.imagem.carregar": "pygame.image.load",
+    "jogo.imagem.salvar": "pygame.image.save",
+    "jogo.transformação.escala": "pygame.transform.scale",
+    "jogo.transformação.escala_suave": "pygame.transform.smoothscale",
+    "jogo.transformação.rotacionar": "pygame.transform.rotate",
+    "jogo.transformação.espelhar": "pygame.transform.flip",
+    "jogo.fonte.carregar": "pygame.font.Font",
+    "jogo.fonte.sistema": "pygame.font.SysFont",
+    "jogo.fonte.padrão": "pygame.font.get_default_font",
+    "jogo.mixer.iniciar": "pygame.mixer.init",
+    "jogo.mixer.som": "pygame.mixer.Sound",
+    "jogo.musica.carregar": "pygame.mixer.music.load",
+    "jogo.musica.tocar": "pygame.mixer.music.play",
+    "jogo.musica.parar": "pygame.mixer.music.stop",
+    "jogo.tempo.relógio": "pygame.time.Clock",
+    "jogo.tempo.milissegundos": "pygame.time.get_ticks",
+    "jogo.tempo.temporizador": "pygame.time.set_timer",
+    "jogo.mouse.posição": "pygame.mouse.get_pos",
+    "jogo.mouse.movimento": "pygame.mouse.get_rel",
+    "jogo.mouse.botões": "pygame.mouse.get_pressed",
+    "jogo.mouse.ir_para": "pygame.mouse.set_pos",
+    "jogo.mouse.visível": "pygame.mouse.set_visible",
+    "jogo.teclado.pressionadas": "pygame.key.get_pressed",
+    "jogo.teclado.nome": "pygame.key.name",
+    "jogo.joystick.contagem": "pygame.joystick.get_count",
+    "jogo.sprite.grupo": "pygame.sprite.Group",
+    "jogo.sprite.sprite": "pygame.sprite.Sprite",
+    "jogo.retângulo": "pygame.Rect",
+    "jogo.vetor": "pygame.Vector2",
+    "jogo.cor": "pygame.Color",
+    "jogo.sair_evento": "pygame.QUIT",
+    "jogo.tecla_pressionada_evento": "pygame.KEYDOWN",
+    "jogo.tecla_solta_evento": "pygame.KEYUP",
+    "jogo.movimento_mouse_evento": "pygame.MOUSEMOTION",
+    "jogo.mouse_clicou": "pygame.MOUSEBUTTONDOWN",
+    "jogo.mouse_soltou": "pygame.MOUSEBUTTONUP",
+    "jogo.esquerda": "pygame.K_LEFT",
+    "jogo.direita": "pygame.K_RIGHT",
+    "jogo.cima": "pygame.K_UP",
+    "jogo.baixo": "pygame.K_DOWN",
+    "jogo.espaco": "pygame.K_SPACE",
+    "jogo.enter": "pygame.K_RETURN",
+    "jogo.esc": "pygame.K_ESCAPE",
+    # CTK / CustomTkinter
+    "ctk.janela": "customtkinter.CTk",
+    "ctk.janela_extra": "customtkinter.CTkToplevel",
+    "ctk.quadro": "customtkinter.CTkFrame",
+    "ctk.rotulo": "customtkinter.CTkLabel",
+    "ctk.botao": "customtkinter.CTkButton",
+    "ctk.entrada": "customtkinter.CTkEntry",
+    "ctk.caixa_texto": "customtkinter.CTkTextbox",
+    "ctk.caixa_selecao": "customtkinter.CTkCheckBox",
+    "ctk.interruptor": "customtkinter.CTkSwitch",
+    "ctk.deslizante": "customtkinter.CTkSlider",
+    "ctk.barra_progresso": "customtkinter.CTkProgressBar",
+    "ctk.menu": "customtkinter.CTkOptionMenu",
+    "ctk.combo": "customtkinter.CTkComboBox",
+    "ctk.abas": "customtkinter.CTkTabview",
+    "ctk.rolagem": "customtkinter.CTkScrollableFrame",
+    "ctk.barra_rolagem": "customtkinter.CTkScrollbar",
+    "ctk.segmentado": "customtkinter.CTkSegmentedButton",
+    "ctk.radio": "customtkinter.CTkRadioButton",
+    "ctk.dialogo": "customtkinter.CTkInputDialog",
+    "ctk.imagem": "customtkinter.CTkImage",
+    "ctk.fonte": "customtkinter.CTkFont",
+    "ctk.modo_aparencia": "customtkinter.set_appearance_mode",
+    "ctk.obter_modo_aparencia": "customtkinter.get_appearance_mode",
+    "ctk.tema": "customtkinter.set_default_color_theme",
+    "ctk.escala_widget": "customtkinter.set_widget_scaling",
+    "ctk.obter_escala_widget": "customtkinter.get_widget_scaling",
+    "ctk.escala_janela": "customtkinter.set_window_scaling",
+    "ctk.obter_escala_janela": "customtkinter.get_window_scaling",
+    # Outros pacotes — comandos comuns e seguros por namespace.
+    "numerico.array": "numpy.array",
+    "numerico.zeros": "numpy.zeros",
+    "numerico.ones": "numpy.ones",
+    "numerico.média": "numpy.mean",
+    "tabelas.ler_csv": "pandas.read_csv",
+    "tabelas.ler_excel": "pandas.read_excel",
+    "tabelas.salvar_csv": "pandas.DataFrame.to_csv",
+    "grafico.linha": "matplotlib.pyplot.plot",
+    "grafico.mostrar": "matplotlib.pyplot.show",
+    "requisicoes.obter": "requests.get",
+    "requisicoes.enviar": "requests.post",
+    "cliente_http.obter": "httpx.get",
+    "api_web.aplicação": "fastapi.FastAPI",
+    "servidor_web.aplicação": "flask.Flask",
+    "banco_dados.engine": "sqlalchemy.create_engine",
+    "planilha.abrir": "openpyxl.load_workbook",
+    "imagens_pillow.abrir": "PIL.Image.open",
+    "visao_cv.abrir": "cv2.imread",
+}
+
+
+def _aplicar_aliases_bibliotecas(resultado, proteger_saida=None):
+    """Aplica aliases qualificados antes das traduções de módulo/palavra.
+
+    Quando o destino de um alias contém identificadores que também existem
+    no dicionário do Pyrtugues (por exemplo ``draw.rect`` e a entrada
+    ``rect -> Rect``), o destino precisa ser protegido contra uma segunda
+    tradução.
+    """
+    for origem, destino in sorted(
+        _BIBLIOTECA_ALIASES.items(),
+        key=lambda item: len(item[0]),
+        reverse=True,
+    ):
+        substituto = (
+            proteger_saida(destino)
+            if proteger_saida is not None
+            else destino
+        )
+        resultado = re.sub(
+            rf'(?<![A-Za-zÀ-ÿ0-9_]){_escape_regex(origem)}(?![A-Za-zÀ-ÿ0-9_])',
+            lambda _m, substituto=substituto: substituto,
+            resultado,
+            flags=re.IGNORECASE,
+        )
+    return resultado
 
 
 def _substituir_palavra(texto, original, destino):
@@ -259,6 +438,29 @@ def _proteger_strings_e_comentarios(codigo):
 
 def _aplicar_traducoes_base(codigo):
     resultado = codigo
+
+    # Saídas que já foram traduzidas para um caminho Python qualificado
+    # ficam protegidas contra novas substituições do dicionário.
+    # Ex.: desenho_retângulo -> draw.rect não pode virar draw.Rect.
+    saidas_protegidas = {}
+
+    def proteger_saida(texto):
+        """Guarda uma saída traduzida para impedir dupla tradução."""
+        indice = len(saidas_protegidas)
+        token = f"__PYRT_OUT_{indice}__"
+        saidas_protegidas[token] = texto
+        return token
+
+    def restaurar_saidas_protegidas(texto):
+        for token, original in saidas_protegidas.items():
+            texto = texto.replace(token, original)
+        return texto
+
+    # Aliases qualificados vêm antes das regras genéricas de módulos.
+    resultado = _aplicar_aliases_bibliotecas(
+        resultado,
+        proteger_saida=proteger_saida,
+    )
     
     # ═══════════════════════════════════════════════════
     # ETAPA 1: TRADUZIR EXPRESSÕES COMPOSTAS (ANTES de tudo)
@@ -342,7 +544,10 @@ def _aplicar_traducoes_base(codigo):
             )
             continue
 
-        resultado = _substituir_palavra(resultado, br, py)
+        # Destinos qualificados (com ponto) não podem ser reprocessados
+        # por chaves menores do próprio dicionário.
+        destino = proteger_saida(py) if "." in py else py
+        resultado = _substituir_palavra(resultado, br, destino)
     
     # ═══════════════════════════════════════════════════
     # ETAPA 3: TRADUÇÕES CONTEXTUAIS
@@ -399,7 +604,10 @@ def _aplicar_traducoes_base(codigo):
     operador_contextual("menos", "-")
     operador_contextual("vezes", "*")
     operador_contextual("resto", "%")
-    
+
+    # Restaura as saídas qualificadas somente depois de todas as regras.
+    resultado = restaurar_saidas_protegidas(resultado)
+
     return resultado
 
 
@@ -462,7 +670,7 @@ def traduzir(codigo_br):
         token = f"__PYRT_VAR_{i}__"
         variaveis_protegidas[token] = nome
         codigo_br = re.sub(
-            rf'(?<![A-Za-zÀ-ÿ0-9_]){re.escape(nome)}(?![A-Za-zÀ-ÿ0-9_])',
+            rf'(?<![A-Za-zÀ-ÿ0-9_.]){re.escape(nome)}(?![A-Za-zÀ-ÿ0-9_])',
             token,
             codigo_br
         )
@@ -5576,6 +5784,7 @@ class JanelaBR(ctk.CTk):
         self._input_requests = Queue()
         self._input_atual = None
         self._input_janela = None
+        self._processo_execucao = None
         self._timer_traducao = None
         self._thread_execucao = None
 
@@ -7573,6 +7782,66 @@ if idade > 10:
         except Exception:
             pass
 
+    def _encontrar_python_externo(self):
+        """Encontra um Python instalado no sistema, fora do executável do Pyrtugues."""
+        candidatos = []
+        if os.name == "nt":
+            py_launcher = shutil.which("py")
+            if py_launcher:
+                candidatos.append(([py_launcher, "-3"], "Python externo (py -3)"))
+        for nome in ("python", "python3"):
+            caminho = shutil.which(nome)
+            if caminho:
+                candidatos.append(([caminho], f"Python externo ({nome})"))
+
+        vistos = set()
+        for comando, descricao in candidatos:
+            chave = tuple(comando)
+            if chave in vistos:
+                continue
+            vistos.add(chave)
+            try:
+                teste = subprocess.run(
+                    comando + ["-c", "import sys; print(sys.executable)"],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                )
+                if teste.returncode == 0 and teste.stdout.strip():
+                    return comando, teste.stdout.strip(), descricao
+            except Exception:
+                continue
+        return None, None, None
+
+    def _criar_script_execucao_externa(self, codigo_py):
+        """Cria um bootstrap que permite input() pelo modal do Pyrtugues."""
+        token = f"__PYRTUGUES_INPUT_{id(self)}_{os.getpid()}__"
+        # O código traduzido é inserido como string para que os tracebacks
+        # apontem para <pyrtugues>, preservando a linha do código do usuário.
+        codigo_literal = repr(codigo_py)
+        script = (
+            "# -*- coding: utf-8 -*-\n"
+            "import builtins as __builtins_mod\n"
+            "import json as __json\n"
+            "import sys as __sys\n\n"
+            f"__TOKEN = {token!r}\n"
+            'def __pyrtugues_input(prompt=""):\n'
+            '    __builtins_mod.print(__TOKEN + __json.dumps(str(prompt), ensure_ascii=False), flush=True)\n'
+            '    resposta = __sys.stdin.readline()\n'
+            '    if not resposta:\n'
+            '        return ""\n'
+            '    return resposta.rstrip("\\r\\n")\n\n'
+            'input = __pyrtugues_input\n'
+            f'exec(compile({codigo_literal}, "<pyrtugues>", "exec"), {{"__name__": "__main__", "__file__": "<pyrtugues>", "input": input}})\n'
+        )
+        arquivo = tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", suffix=".py", prefix="pyrtugues_exec_", delete=False
+        )
+        arquivo.write(script)
+        arquivo.close()
+        return arquivo.name, token
+
     def executar_codigo(self):
         if self.executando:
             return
@@ -7588,7 +7857,7 @@ if idade > 10:
         self.parar_evento.clear()
         self.btn_parar.configure(state="normal")
         self.btn_executar.configure(state="disabled")
-        self._atualizar_status("Executando", "#FDE68A")
+        self._atualizar_status("Executando com Python do sistema", "#FDE68A")
 
         self._thread_execucao = threading.Thread(
             target=self._executar_em_background,
@@ -7598,38 +7867,101 @@ if idade > 10:
         self._thread_execucao.start()
 
     def _executar_em_background(self, codigo_br):
+        """Executa o código traduzido usando o Python instalado no computador."""
         linhas_br = codigo_br.splitlines()
+        script_path = None
+        processo = None
         try:
             codigo_py = traduzir(codigo_br)
-            namespace = self.namespace.copy()
-            namespace["input"] = self.input_gui
-            namespace["print"] = self.print_gui
+            comando_python, python_real, descricao = self._encontrar_python_externo()
+            if not comando_python:
+                raise RuntimeError(
+                    "Não encontrei um Python instalado no sistema.\n\n"
+                    "Instale o Python e adicione-o ao PATH. Depois instale as bibliotecas desejadas com pip."
+                )
 
-            sys.settrace(self._trace_execucao)
-            exec(codigo_py, namespace)
-            sys.settrace(None)
+            script_path, token_input = self._criar_script_execucao_externa(codigo_py)
+            comando = comando_python + ["-u", script_path]
+            self.after(0, lambda p=python_real: self._atualizar_status(f"Executando: {p}", "#FDE68A"))
 
-            if not self.parar_evento.is_set():
-                self.after(0, lambda ns=namespace: self._finalizar_execucao_sucesso(ns))
-            else:
-                self.after(0, self._finalizar_execucao_parado)
-        except Exception as exc:
+            processo = subprocess.Popen(
+                comando,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                bufsize=1,
+                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+            )
+            self._processo_execucao = processo
+
+            while True:
+                if self.parar_evento.is_set():
+                    try:
+                        processo.terminate()
+                    except Exception:
+                        pass
+                    break
+                linha = processo.stdout.readline()
+                if linha == "":
+                    if processo.poll() is not None:
+                        break
+                    continue
+                linha = linha.rstrip("\r\n")
+                if linha.startswith(token_input):
+                    try:
+                        prompt = json.loads(linha[len(token_input):])
+                    except Exception:
+                        prompt = "Digite um valor:"
+                    resposta = self.input_gui(prompt)
+                    try:
+                        processo.stdin.write(str(resposta) + "\n")
+                        processo.stdin.flush()
+                    except Exception:
+                        pass
+                else:
+                    self.escrever_saida(linha + "\n")
+
             try:
-                sys.settrace(None)
-            except Exception:
-                pass
+                retorno = processo.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                processo.kill()
+                retorno = processo.wait(timeout=2)
+            self._processo_execucao = None
+
             if self.parar_evento.is_set():
                 self.after(0, self._finalizar_execucao_parado)
-                return
+            elif retorno == 0:
+                self.after(0, self._finalizar_execucao_sucesso, {})
+            else:
+                self.after(0, self._mostrar_erro_execucao_externo, retorno, linhas_br)
 
-            linha_erro = None
-            tb = exc.__traceback__
-            while tb:
-                if tb.tb_frame.f_code.co_filename == "<string>":
-                    linha_erro = tb.tb_lineno
-                tb = tb.tb_next
+        except Exception as exc:
+            self._processo_execucao = None
+            if self.parar_evento.is_set():
+                self.after(0, self._finalizar_execucao_parado)
+            else:
+                self.after(0, self._mostrar_erro_execucao, exc, None, linhas_br)
+        finally:
+            if script_path:
+                try:
+                    Path(script_path).unlink(missing_ok=True)
+                except Exception:
+                    pass
 
-            self.after(0, lambda e=exc, linha=linha_erro, linhas=linhas_br: self._mostrar_erro_execucao(e, linha, linhas))
+    def _mostrar_erro_execucao_externo(self, retorno, linhas_br):
+        self.executando = False
+        self.btn_parar.configure(state="disabled")
+        self.btn_executar.configure(state="normal")
+        self._atualizar_status("Erro", "#FCA5A5")
+        self.escrever_saida(f"\n❌ O Python externo encerrou com código {retorno}.\n")
+        self.escrever_saida(
+            "Se apareceu ModuleNotFoundError, instale a biblioteca no mesmo Python "
+            "mostrado no status.\n"
+        )
+        self.escrever_saida("\n" + "=" * 50 + "\n")
 
     def _finalizar_execucao_sucesso(self, namespace):
         self.namespace.update(namespace)
@@ -7667,6 +7999,11 @@ if idade > 10:
             return
         self.parar_evento.set()
         self._cancelar_pedidos_input()
+        if self._processo_execucao is not None:
+            try:
+                self._processo_execucao.terminate()
+            except Exception:
+                pass
         if self._input_janela is not None:
             try:
                 self._input_janela.grab_release()
