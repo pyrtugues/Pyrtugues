@@ -62,7 +62,7 @@ O Pyrtugues possui diferentes formas de utilização:
 
 * 🖥️ aplicação Desktop;
 * 🪟 Windows;
-* 🐧 Linux;
+* ♾️ Visual studio code (vs code);
 * 🌐 Editor Web;
 * 🎮 suporte a Pygame;
 * 📚 exemplos educacionais;
@@ -1028,7 +1028,7 @@ Algumas formas de contribuir:
 * 📖 melhorar a documentação;
 * 🧩 criar exemplos;
 * 🎮 criar projetos com Pygame;
-* 🐧 testar no Linux;
+* ♾️ testar no Vs code;
 * 🪟 testar no Windows;
 * 💻 contribuir com código.
 
@@ -1085,7 +1085,7 @@ O projeto evoluiu para incluir:
 * linguagem de programação em português;
 * tradutor para Python;
 * aplicação Desktop;
-* suporte ao Linux;
+* suporte ao Vs code;
 * suporte ao Windows;
 * Pygame;
 * Editor Web;
@@ -1112,6 +1112,7 @@ Entre as áreas que podem evoluir estão:
 * documentação;
 * Desktop;
 * Linux;
+* Visual studio code
 * Windows;
 * Editor Web;
 * materiais educacionais;
