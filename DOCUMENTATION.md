@@ -12,7 +12,7 @@ Esta documentação descreve o projeto **Pyrtugues** como ele está hoje: o trad
 | O que é | Tradutor de português para Python, com editor, curso e extensão para VS Code |
 | Extensão de arquivo | `.pyrt` |
 | Repositório | https://github.com/pyrtugues/Pyrtugues |
-| Aplicativo desktop (`curso.py`) | versão **1.4.0** (interface em CustomTkinter) |
+| Aplicativo desktop (`curso.py`) | versão **1.5.0** (interface em CustomTkinter) |
 | Núcleo do tradutor na extensão | `pyrtugues_core.py`, com a mesma lógica de tradução da v1.4.0 |
 | Extensão do VS Code | versão **1.5.0**, publisher `pyrtugues`, nome `pyrtugues` |
 | Requisito de execução | Python **3.8 ou superior** instalado no computador |
